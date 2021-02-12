@@ -64,7 +64,10 @@
         <tbody>
           <tr v-for="flashcard in flashcards" :key="flashcard.id">
             <td>
-              <a href="">{{ flashcard.back }} &minus; {{ flashcard.front }}</a>
+              <router-link
+                :to="{ name: 'FlashcardDetail', params: { id: flashcard.id } }"
+                >{{ flashcard.back }} &minus; {{ flashcard.front }}</router-link
+              >
             </td>
             <td>
               <small>{{ flashcard.added }}</small>

@@ -1,10 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppHome from '../views/AppHome.vue'
-import SetList from '../views/SetList.vue'
-import LearnList from '../views/LearnList.vue'
 import AppWelcome from '../views/AppWelcome.vue'
-import FlashcardDetail from '../views/FlashcardDetail.vue'
-import FlashcardList from '../views/FlashcardList.vue'
+import SetList from '../views/SetList.vue'
+import LearnList from '../views/learn/LearnList.vue'
+import FlashcardDetail from '../views/flashcards/FlashcardDetail.vue'
+import FlashcardList from '../views/flashcards/FlashcardList.vue'
+import UserRegister from '../views/users/UserRegister.vue'
+import UserLogin from '../views/users/UserLogin.vue'
+import UserProfile from '../views/users/UserProfile.vue'
+import NotFound from '../views/NotFound.vue'
+
 
 const routes = [
     {
@@ -28,14 +33,35 @@ const routes = [
         component: LearnList
     },
     {
-        path: '/flashcard',
+        path: '/flashcards/:id',
         name: 'FlashcardDetail',
-        component: FlashcardDetail
+        component: FlashcardDetail,
+        props: true
     },
     {
         path: '/flashcards',
         name: 'FlashcardList',
         component: FlashcardList
+    },
+    {
+        path: '/register',
+        name: 'UserRegister',
+        component: UserRegister
+    },
+    {
+        path: '/login',
+        name: 'UserLogin',
+        component: UserLogin
+    },
+    {
+        path: '/profile',
+        name: 'UserProfile',
+        component: UserProfile
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: 'NotFound',
+        component: NotFound
     }
 ]
 

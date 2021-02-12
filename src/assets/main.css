@@ -147,7 +147,6 @@ img {
     font-weight: bold;
 }
 
-
 .btn-b {
     background: #3590F0;
     color: #ffffff;
@@ -159,20 +158,7 @@ img {
     font-weight: bold;
 }
 
-.btn-next {
-    background: #dddddd;
-    color: #000000;
-}
 
-.btn-previous {
-    background: #eeeeee;
-    color: #000000;
-}
-
-.btn-next:hover, .btn-previous:hover {
-    background: #bbbbbb;
-    color: #000000;
-}
 
 .btn-check {
     background: #3590F0;
@@ -220,16 +206,6 @@ img {
 
 .btn-back:hover {
  background: #444444;
- color: #ffffff;
-}
-
-.btn-add {
- background: #2337af;
- color: #ffffff;
-}
-
-.btn-add:hover {
- background: #2c3779;
  color: #ffffff;
 }
 

@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import FlashcardCard from "../components/FlashcardCard.vue";
-// import FlashcardDetailDelete from "./FlashcardDetailDelete.vue";
+import FlashcardCard from "@/components/FlashcardCard.vue";
+// import FlashcardDetailDelete from "./flashcards/FlashcardDetailDelete.vue";
 export default {
   name: "FlashcardDetail",
   components: {
@@ -89,15 +89,8 @@ export default {
   data() {
     return {
       username: "Aga",
-      flashcard: {
-        id: 14,
-        set: "angielski",
-        front: "pies",
-        back: "dog",
-        added: "20 January, 2021",
-        next_id: 15,
-        previous_id: 13,
-      },
+      props: ["id", "flashcards"],
+      flashcard: "",
     };
   },
   computed: {

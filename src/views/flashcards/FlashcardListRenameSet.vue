@@ -1,16 +1,15 @@
 <template>
   <form method="POST">
     <fieldset class="form-group mt-2">
-      <legend class="border-bottom mb-4">Create new set</legend>
-      {{ form }}
+      <legend class="border-bottom mb-4">Update Set</legend>
     </fieldset>
-    <div class="row mb-4 mt-3">
-      <button class="btn btn-primary btn-square ml-3 px-5" type="submit">
+    <div class="row mb-4">
+      <button class="btn btn-square btn-primary ml-3 px-4" type="submit">
         Submit
       </button>
       <router-link
         :to="{ name: 'SetList' }"
-        class="btn btn-back btn-square ml-1"
+        class="btn btn-square btn-back ml-2"
         role="button"
         aria-pressed="true"
       >
@@ -22,7 +21,7 @@
 
 <script>
 export default {
-  name: SetListCreate,
+  name: FlashcardListRenameSet,
 };
 </script>
 

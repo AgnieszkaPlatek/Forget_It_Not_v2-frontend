@@ -15,11 +15,11 @@
         <tbody>
           <tr v-for="set in sets" :key="set.id">
             <td>
-              <a class="mb-3" href=""
+              <router-link :to="{ name: 'FlashcardList' }" class="mb-3"
                 ><b>{{ set.name }}</b>
                 <span class="badge badge-primary ml-2">{{
                   set.num_flashcards
-                }}</span></a
+                }}</span></router-link
               >
             </td>
             <td>
