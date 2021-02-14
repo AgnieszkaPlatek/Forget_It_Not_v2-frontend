@@ -1,38 +1,31 @@
 <template>
   <section class="my-4">
-    <div class="ml-4">
-      <div class="mb-2 mr-5">
+    <div class="text-center">
+      <div class="mb-2">
         <h1 class="h2">
-          {{ setname }}<span class="badge badge-primary ml-3">{{ count }}</span>
+          {{ setname
+          }}<span class="badge badge-primary ml-3">{{ num_flashcards }}</span>
         </h1>
       </div>
       <div class="mb-lg-3 pb-2">
         <h5>by {{ username }}</h5>
-        <p class="text-muted">created on {{ date }}</p>
+        <p class="text-muted">created on {{ created }}</p>
       </div>
     </div>
-    <div v-if="count > 0" class="fluid-container">
-      <div class="row col-12 btn-md-group mb-2" id="lm">
-        <a
-          id="set_filter"
-          href=""
-          class="btn btn-square d-inline-block col-lg-6"
+    <div v-if="num_flashcards > 0" class="fluid-container">
+      <div class="mb-2" id="lm">
+        <a id="set_filter" href="" class="btn ml-5"
           >Filter flashcards by date</a
         >
-        <a
-          id="set_search"
-          href=""
-          class="btn btn-square d-inline-block col-lg-6"
-          >Search for flashcard<i class="ml-3 fa fa-search"></i
-        ></a>
+        <SearchBar />
       </div>
     </div>
-    <div v-if="count > 0 && count < 50">
+    <div v-if="num_flashcards > 0 && num_flashcards < 50">
       <div class="fluid-container mb-3">
-        <div class="col-12">
+        <div class="text-center">
           <a
             href=""
-            class="btn btn-square btn-learn btn-block btn-primary btn-lg"
+            class="btn btn-learn btn-primary px-5 py-3 btn-lg"
             role="button"
             aria-pressed="true"
             >Learn</a
@@ -40,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div v-else-if="count > 50" class="fluid-container mb-5">
+    <div v-else-if="num_flashcards > 50" class="fluid-container mb-5">
       <div class="btn-group col-12 mb-1">
         <button
           type="button"
@@ -77,34 +70,26 @@
       </table>
     </div>
     <div class="fluid-container mt-5 ml-3">
-      <div class="row btn-group mb-3 col-12">
+      <div class="mb-3">
         <a
           href=""
-          class="btn btn-square btn-add d-inline-block col-lg-8 mb-1"
+          class="btn btn-add mb-1 px-5 py-3"
           role="button"
           aria-pressed="true"
           >Add Flashcard</a
         >
-        <a
-          href=""
-          class="btn btn-back btn-square d-inline-block col-lg-4 mb-1"
-          role="button"
-          aria-pressed="true"
-          >Back</a
-        >
       </div>
-      <div class="row col-12">
-        <div class="col-lg-4 offset-lg-4"></div>
+      <div class="row">
         <a
           href=""
-          class="btn btn-update btn-square d-inline-block btn-sm col-lg-2 mb-1"
+          class="btn btn-update btn-sm ml-3 px-5"
           role="button"
           aria-pressed="true"
           >Update Set</a
         >
         <a
           href=""
-          class="btn btn-delete btn-square d-inline-block btn-sm col-lg-2 mb-1"
+          class="btn btn-delete btn-sm ml-3 px-5"
           role="button"
           aria-pressed="true"
           >Delete Set</a
@@ -115,29 +100,48 @@
 </template>
   
 <script>
+import axios from "axios";
+import SearchBar from "@/components/SearchBar.vue";
 export default {
   name: "FlashcardList",
-  props: ["authenticated"],
+  components: {
+    SearchBar,
+  },
+  props: ["id"],
   data() {
     return {
-      date: "20 January, 2021",
-      setname: "angielski",
-      username: "Aga",
-      flashcards: [
-        { id: 1, front: "pies", back: "dog", added: "20 January, 2021" },
-        { id: 2, front: "kot", back: "cat", added: "20 January, 2021" },
-        { id: 3, front: "mysz", back: "mouse", added: "21 January, 2021" },
-        { id: 4, front: "koń", back: "horse", added: "22 January, 2021" },
-        { id: 5, front: "krowa", back: "cow", added: "22 January, 2021" },
-      ],
+      created: "", //20 January, 2021
+      num_flashcards: 0,
+      setname: "",
+      username: "",
+      flashcards: [],
+      authenticated: true,
     };
   },
-  methods: {},
-  computed: {
-    count() {
-      return this.flashcards.length;
-    },
+  mounted() {
+    axios
+      .get("http://localhost:8000/flashcard-sets/" + this.id, {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
+      .then(
+        (response) => (
+          (this.flashcards = response.data["flashcards"]),
+          // this.setname = response.data["setname"],
+          (this.num_flashcards = response.data["flashcards"].length),
+          (this.setname = response.data["name"]),
+          (this.username = response.data["owner_name"]),
+          (this.created = response.data["created"])
+        )
+      )
+      .catch((error) => console.log(error));
   },
+  // computed: {
+  //   count() {
+  //     return this.flashcards.length;
+  //   },
+  // },
 };
 </script>
 

@@ -15,10 +15,12 @@
         <tbody>
           <tr v-for="set in sets" :key="set.id">
             <td>
-              <router-link :to="{ name: 'FlashcardList' }" class="mb-3"
+              <router-link
+                :to="{ name: 'FlashcardList', params: { id: set.id } }"
+                class="mb-3"
                 ><b>{{ set.name }}</b>
                 <span class="badge badge-primary ml-2">{{
-                  set.num_flashcards
+                  num_flashcards
                 }}</span></router-link
               >
             </td>
@@ -47,39 +49,39 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "SetList",
   props: [],
   data() {
     return {
-      username: "Aga",
-      sets: [
-        {
-          id: 1,
-          name: "angielski",
-          num_flashcards: 50,
-          created: "20 January, 2021",
-        },
-        {
-          id: 2,
-          name: "hiszpański",
-          num_flashcards: 20,
-          created: "21 January, 2021",
-        },
-        {
-          id: 3,
-          name: "niemiecki",
-          num_flashcards: 15,
-          created: "31 January, 2021",
-        },
-      ],
+      sets: [],
+      username: "",
+      num_sets: 0,
+      num_flashcards: 0,
     };
   },
-  computed: {
-    num_sets() {
-      return this.sets.length;
-    },
+  mounted() {
+    axios
+      .get("http://localhost:8000/flashcard-sets/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
+      .then(
+        (response) => (
+          (this.sets = response.data),
+          (this.username = response.data[0]["owner_name"]),
+          (this.num_sets = response.data.length)
+        )
+      )
+      .catch((error) => console.log(error));
   },
+  // computed: {
+  //   num_sets() {
+  //     return this.sets.length;
+  //   },
+  // },
 };
 </script>
 

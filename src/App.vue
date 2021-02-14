@@ -30,5 +30,6 @@ export default {
 }
 router-link {
   cursor: pointer;
+  text-decoration: none;
 }
 </style>

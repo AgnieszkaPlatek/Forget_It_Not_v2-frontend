@@ -39,9 +39,10 @@ const routes = [
         props: true
     },
     {
-        path: '/flashcards',
+        path: '/sets/:id',
         name: 'FlashcardList',
-        component: FlashcardList
+        component: FlashcardList,
+        props: true
     },
     {
         path: '/register',
