@@ -56,15 +56,15 @@
       <table class="table table-hover col-11">
         <tbody>
           <tr v-for="flashcard in flashcards" :key="flashcard.id">
-            <td>
-              <router-link
-                :to="{ name: 'FlashcardDetail', params: { id: flashcard.id } }"
-                >{{ flashcard.back }} &minus; {{ flashcard.front }}</router-link
-              >
-            </td>
-            <td>
-              <small>{{ flashcard.added }}</small>
-            </td>
+            <router-link
+              :to="{ name: 'FlashcardDetail', params: { id: flashcard.id } }"
+            >
+              <td>{{ flashcard.back }}</td>
+              <td>{{ flashcard.front }}</td>
+              <td>
+                <small>{{ flashcard.added }}</small>
+              </td>
+            </router-link>
           </tr>
         </tbody>
       </table>
@@ -120,31 +120,30 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8000/flashcard-sets/" + this.id, {
+      .get("http://localhost:8000/flashcard-list/" + this.id, {
         headers: {
           Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
       })
       .then(
         (response) => (
-          (this.flashcards = response.data["flashcards"]),
-          // this.setname = response.data["setname"],
-          (this.num_flashcards = response.data["flashcards"].length),
-          (this.setname = response.data["name"]),
-          (this.username = response.data["owner_name"]),
-          (this.created = response.data["created"])
+          (this.flashcards = response.data),
+          (this.num_flashcards = response.data.length),
+          (this.setname = response.data[0]["set_name"]),
+          (this.username = response.data[0]["owner_name"])(
+            (this.created = response.data[0]["set_created"])
+          )
         )
       )
       .catch((error) => console.log(error));
   },
-  // computed: {
-  //   count() {
-  //     return this.flashcards.length;
-  //   },
-  // },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+td {
+  color: #2b2a2a;
+  font-weight: bold;
+}
 </style>
