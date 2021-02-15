@@ -44,34 +44,30 @@
         >
       </div>
     </div>
-    <div class="fluid-container mt-5 ml-3">
-      <div class="row btn-group col-12 mb-3">
+    <div class="container mt-5 ml-3">
+      <a
+        href=""
+        class="btn btn-lg btn-add mb-5 px-5 mr-5"
+        role="button"
+        aria-pressed="true"
+        >Add Flashcard</a
+      >
+      <div class="row mb-3">
         <a
           href=""
-          class="btn col-md-5 btn-add mb-1"
-          role="button"
-          aria-pressed="true"
-          >Add Flashcard</a
-        >
-        <a
-          href=""
-          class="btn btn-back col-md-3 mb-1"
+          class="btn btn-back mb-1 px-4 mr-5"
           role="button"
           aria-pressed="true"
           >Back</a
         >
         <a
           href=""
-          class="btn btn-update col-md-2 mb-1"
+          class="btn btn-update mb-1 mr-5"
           role="button"
           aria-pressed="true"
           >Edit</a
         >
-        <a
-          href=""
-          class="btn btn-delete col-md-2 mb-1"
-          role="button"
-          aria-pressed="true"
+        <a href="" class="btn btn-delete mb-1" role="button" aria-pressed="true"
           >Delete</a
         >
       </div>
@@ -95,7 +91,7 @@ export default {
       added: "", //20 January, 2021
       front: "",
       back: "",
-      setname: "to be fetched",
+      setname: "",
       username: "",
       authenticated: true,
       next_id: false,
@@ -114,7 +110,7 @@ export default {
         (response) => (
           (this.front = response.data["front"]),
           (this.back = response.data["back"]),
-          // this.setname = response.data["setname"],
+          (this.setname = response.data["set_name"]),
           (this.username = response.data["owner_name"]),
           (this.added = response.data["added"])((this.cardtext = this.back))
         )
