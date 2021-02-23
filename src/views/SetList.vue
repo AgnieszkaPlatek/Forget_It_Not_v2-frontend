@@ -1,5 +1,5 @@
 <template>
-  <section class="mt-4">
+  <section class="mt-4 mr-md-5">
     <div class="mb-4">
       <h1 class="h3">Flashcard Sets</h1>
       <h6>by {{ username }}</h6>
@@ -20,7 +20,7 @@
                 class="mb-3"
                 ><b>{{ set.name }}</b>
                 <span class="badge badge-primary ml-2">{{
-                  num_flashcards
+                  set.num_flashcards
                 }}</span></router-link
               >
             </td>
@@ -35,31 +35,40 @@
       <h6>You have no sets yet. Click the button below to create one.</h6>
     </div>
     <div class="mb-2">
-      <form>
-        <button
-          class="btn btn-b btn-outline-primary px-5"
-          type="submit"
-          formaction=""
-        >
-          New Set
-        </button>
-      </form>
+      <button
+        v-if="!creating"
+        @click="toggleCreate"
+        class="btn btn-b btn-outline-primary px-5"
+        type="submit"
+      >
+        New Set
+      </button>
     </div>
+    <SetListCreate v-if="creating" />
   </section>
 </template>
 
 <script>
 import axios from "axios";
+import SetListCreate from "./SetListCreate.vue";
 export default {
   name: "SetList",
+  components: {
+    SetListCreate,
+  },
   props: [],
   data() {
     return {
       sets: [],
       username: "",
       num_sets: 0,
-      num_flashcards: 0,
+      creating: false,
     };
+  },
+  methods: {
+    toggleCreate() {
+      this.creating = !this.creating;
+    },
   },
   mounted() {
     axios
@@ -77,11 +86,6 @@ export default {
       )
       .catch((error) => console.log(error));
   },
-  // computed: {
-  //   num_sets() {
-  //     return this.sets.length;
-  //   },
-  // },
 };
 </script>
 
