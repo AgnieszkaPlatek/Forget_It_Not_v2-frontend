@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AppHome from '../views/AppHome.vue'
 import AppWelcome from '../views/AppWelcome.vue'
 import SetList from '../views/SetList.vue'
+import SetDelete from '../views/SetDelete.vue'
 import LearnList from '../views/learn/LearnList.vue'
 import FlashcardDetail from '../views/flashcards/FlashcardDetail.vue'
+import FlashcardAdd from '../views/flashcards/FlashcardAdd.vue'
 import FlashcardList from '../views/flashcards/FlashcardList.vue'
 import UserRegister from '../views/users/UserRegister.vue'
 import UserLogin from '../views/users/UserLogin.vue'
@@ -39,9 +41,21 @@ const routes = [
         props: true
     },
     {
+        path: '/sets/:id/add',
+        name: 'FlashcardAdd',
+        component: FlashcardAdd,
+        props: true
+    },
+    {
         path: '/sets/:id',
         name: 'FlashcardList',
         component: FlashcardList,
+        props: true
+    },
+    {
+        path: '/sets/:id/delete',
+        name: 'SetDelete',
+        component: SetDelete,
         props: true
     },
     {
