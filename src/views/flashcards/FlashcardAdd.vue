@@ -1,28 +1,28 @@
 <template>
   <section>
-    <h2 class="text-center mt-3">Add flashcard</h2>
-    <form @submit="addFlashcard">
-      <label>Front:</label>
-      <input type="front" required v-model="front" />
-      <label>Back:</label>
-      <input type="back" required v-model="back" />
-      <div class="submit mt-5">
-        <button class="btn btn-primary btn-block px-5" type="submit">
-          Add
-        </button>
-      </div>
-    </form>
-
-    <!-- <fieldset class="form-group mt-2">
-        <legend class="border-bottom mb-4">Add flashcard</legend>
-      </fieldset>
-      <div class="row mb-4 mt-4 ml-1">
-        <button class="btn btn-square btn-primary px-5" type="submit">
-          Add
-        </button> -->
+    <div v-if="!added">
+      <h2 class="text-center mt-3">Add flashcard</h2>
+      <form @submit="addFlashcard">
+        <label>Front:</label>
+        <input type="front" required v-model="front" />
+        <label>Back:</label>
+        <input type="back" required v-model="back" />
+        <div class="submit mt-5">
+          <button class="btn btn-primary btn-block px-5" type="submit">
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
+    <div v-if="added" id="after" class="text-center my-3">
+      <h3>Flashcard has been added!</h3>
+      <button @click="addAnother" class="btn btn-primary btn-block mt-4 px-5">
+        Add another
+      </button>
+    </div>
     <div class="text-center">
       <router-link
-        :to="{ name: 'SetList' }"
+        :to="{ name: 'FlashcardList', params: { id: id } }"
         class="btn btn-back btn-sm my-3 px-5"
         role="button"
         >Cancel</router-link
@@ -35,10 +35,12 @@
 import axios from "axios";
 export default {
   name: "FlashcardAdd",
+  props: ["id"],
   data() {
     return {
       front: "",
       back: "",
+      added: false,
     };
   },
   methods: {
@@ -47,7 +49,7 @@ export default {
         method: "post",
         url: "http://localhost:8000/flashcards/",
         data: {
-          flashcard_set: 4,
+          flashcard_set: this.id,
           front: this.front,
           back: this.back,
         },
@@ -58,6 +60,12 @@ export default {
       }).catch((err) => {
         console.log("error in request", err);
       });
+      this.added = true;
+      this.front = "";
+      this.back = "";
+    },
+    addAnother() {
+      this.added = false;
     },
   },
 };
@@ -75,7 +83,7 @@ form {
 label {
   color: #555;
   display: inline-block;
-  font-size: 1.3em;
+  font-size: 1.2em;
   margin: 20px 0 15px;
   font-weight: bold;
 }
@@ -87,5 +95,9 @@ input {
   border-bottom: 2px solid #ddd;
   color: #555;
   background-color: #ffffff;
+}
+#after {
+  max-width: 500px;
+  margin: auto;
 }
 </style>
