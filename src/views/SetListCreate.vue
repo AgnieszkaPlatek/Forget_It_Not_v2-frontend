@@ -4,7 +4,6 @@
     <input type="name" required v-model="name" />
     <button class="btn btn-primary px-4" type="submit">Create</button>
   </form>
-  <button class="btn btn-back ml-3">Cancel</button>
 </template>
 
 <script>

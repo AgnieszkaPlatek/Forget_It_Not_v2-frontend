@@ -44,7 +44,10 @@
         New Set
       </button>
     </div>
-    <SetListCreate v-if="creating" />
+    <div v-if="creating">
+      <SetListCreate />
+      <button @click="toggleCreate" class="btn btn-back ml-3">Cancel</button>
+    </div>
   </section>
 </template>
 
