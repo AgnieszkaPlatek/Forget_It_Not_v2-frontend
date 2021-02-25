@@ -5,70 +5,66 @@
       <h5>by {{ username }}</h5>
       <small class="text-muted">added on {{ added }}</small>
     </div>
-    <div @click="changeText">
+    <div @click="changeText" class="text-center">
+      <img class="mr-5" src="@/assets/arrow.png" alt="arrow" />
       <flashcard-card :cardtext="cardtext" />
     </div>
     <div class="fluid container col-md-8 mt-4">
       <div v-if="previous_id && next_id" class="row">
-        <a
-          href=""
+        <router-link
+          :to="{ name: 'FlashcardDetail', params: { id: previous_id } }"
+          @click="loadFlashcard"
           class="btn btn-previous col-6 offset-md-2 col-md-4 d-inline-block"
-          role="button"
-          aria-pressed="true"
-          >Previous</a
+          >Previous</router-link
         >
-        <a
-          href=""
+        <router-link
+          :to="{ name: 'FlashcardDetail', params: { id: next_id } }"
+          @click="loadFlashcard"
           class="btn btn-next col-6 col-md-4 d-inline-block"
-          role="button"
-          aria-pressed="true"
-          >Next</a
+          >Next</router-link
         >
       </div>
       <div v-if="previous_id && !next_id" class="row">
-        <a
-          href=""
+        <router-link
+          :to="{ name: 'FlashcardDetail', params: { id: previous_id } }"
+          @click="loadFlashcard"
           class="btn btn-previous offset-md-2 col-md-8 d-inline-block"
-          role="button"
-          aria-pressed="true"
-          >Previous</a
+          >Previous</router-link
         >
       </div>
       <div v-if="!previous_id && next_id" class="row">
-        <a
-          href=""
+        <router-link
+          :to="{ name: 'FlashcardDetail', params: { id: next_id } }"
+          @click="loadFlashcard"
           class="btn btn-next offset-md-2 col-md-8 d-inline-block"
           role="button"
           aria-pressed="true"
-          >Next</a
+          >Next</router-link
         >
       </div>
     </div>
     <div class="container mt-5 ml-3">
-      <a
-        href=""
-        class="btn btn-lg btn-add mb-5 px-5 mr-5"
+      <router-link
+        :to="{ name: 'FlashcardAdd' }"
+        class="btn btn-primary px-5 mb-3"
         role="button"
         aria-pressed="true"
-        >Add Flashcard</a
+        >Add Flashcard</router-link
       >
       <div class="row mb-3">
-        <a
-          href=""
-          class="btn btn-back mb-1 px-4 mr-5"
-          role="button"
-          aria-pressed="true"
-          >Back</a
+        <router-link
+          :to="{ name: 'FlashcardList', params: { id: set_id } }"
+          class="btn btn-back px-5 mx-3"
+          >Back</router-link
         >
-        <a
-          href=""
-          class="btn btn-update mb-1 mr-5"
-          role="button"
-          aria-pressed="true"
+        <a href="" class="btn btn-update mr-3" role="button" aria-pressed="true"
           >Edit</a
         >
-        <a href="" class="btn btn-delete mb-1" role="button" aria-pressed="true"
-          >Delete</a
+        <router-link
+          @click="deleteFlashcard"
+          :to="{ name: 'FlashcardList', params: { id: set_id } }"
+          class="btn btn btn-delete"
+          >Delete</router-link
         >
       </div>
     </div>
@@ -78,12 +74,10 @@
 <script>
 import axios from "axios";
 import FlashcardCard from "@/components/FlashcardCard.vue";
-// import FlashcardDetailDelete from "./flashcards/FlashcardDetailDelete.vue";
 export default {
   name: "FlashcardDetail",
   components: {
     FlashcardCard,
-    // FlashcardDetailDelete,
   },
   props: ["id"],
   data() {
@@ -92,32 +86,40 @@ export default {
       front: "",
       back: "",
       setname: "",
+      set_id: 0,
       username: "",
       authenticated: true,
-      next_id: false,
-      previous_id: false,
+      next_id: null,
+      previous_id: null,
       cardtext: "",
     };
   },
   mounted() {
-    axios
-      .get("http://localhost:8000/flashcards/" + this.id, {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
-      .then(
-        (response) => (
-          (this.front = response.data["front"]),
-          (this.back = response.data["back"]),
-          (this.setname = response.data["set_name"]),
-          (this.username = response.data["owner_name"]),
-          (this.added = response.data["added"])((this.cardtext = this.back))
-        )
-      )
-      .catch((error) => console.log(error));
+    this.loadFlashcard();
   },
   methods: {
+    loadFlashcard() {
+      axios
+        .get("http://localhost:8000/flashcards/" + this.id, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
+        .then(
+          (response) => (
+            (this.front = response.data["front"]),
+            (this.back = response.data["back"]),
+            (this.cardtext = this.back),
+            (this.username = response.data["owner_name"]),
+            (this.added = response.data["added"]),
+            (this.set_id = response.data["flashcard_set"]),
+            (this.setname = response.data["set_name"]),
+            (this.next_id = response.data["next_id"]),
+            (this.previous_id = response.data["previous_id"])
+          )
+        )
+        .catch((error) => console.log(error));
+    },
     changeText() {
       if (this.cardtext == this.back) {
         this.cardtext = this.front;
@@ -127,11 +129,24 @@ export default {
         console.log("cardtext: ", this.back);
       }
     },
+    deleteFlashcard() {
+      axios({
+        method: "delete",
+        url: "http://localhost:8000/flashcards/" + this.id,
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      }).catch((err) => {
+        console.log("error in request", err);
+      });
+      alert("Flashcard has been deleted!");
+    },
+    editFlashcard() {},
   },
 };
 </script>
 
-<style>
+<style scoped>
 .btn-add {
   background: #2337af;
   color: #ffffff;
