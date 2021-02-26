@@ -33,13 +33,14 @@ export default {
     setDelete() {
       axios({
         method: "delete",
-        url: "http://localhost:8000/flashcard-sets/" + this.id,
+        url: "flashcard-sets/" + this.id,
         headers: {
           Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
       }).catch((err) => {
         console.log("error in request", err);
       });
+      this.$forceUpdate();
       this.$router.push({ name: "SetList" });
     },
   },
