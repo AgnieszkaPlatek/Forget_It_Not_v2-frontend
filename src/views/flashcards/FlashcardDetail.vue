@@ -100,7 +100,7 @@ export default {
   methods: {
     loadFlashcard() {
       axios
-        .get("http://localhost:8000/flashcards/" + this.id, {
+        .get("flashcards/" + this.id, {
           headers: {
             Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
           },

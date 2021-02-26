@@ -10,3 +10,5 @@ import router from './router'
 createApp(App)
     .use(router, VueAxios, axios)
     .mount('#app')
+
+axios.defaults.baseURL = "http://localhost:8000/api/";
