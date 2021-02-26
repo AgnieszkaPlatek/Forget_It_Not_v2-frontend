@@ -1,7 +1,7 @@
 <template>
   <form method="POST">
     <fieldset class="form-group mt-2">
-      <legend class="border-bottom mb-4">Update Set</legend>
+      <legend class="border-bottom mb-4">Rename</legend>
     </fieldset>
     <div class="row mb-4">
       <button class="btn btn-square btn-primary ml-3 px-4" type="submit">

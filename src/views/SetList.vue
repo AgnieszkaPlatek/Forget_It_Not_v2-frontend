@@ -16,7 +16,10 @@
           <tr v-for="set in sets" :key="set.id">
             <td>
               <router-link
-                :to="{ name: 'FlashcardList', params: { id: set.id } }"
+                :to="{
+                  name: 'FlashcardList',
+                  params: { id: set.id, set_name: set.name },
+                }"
                 class="mb-3"
                 ><b>{{ set.name }}</b>
                 <span class="badge badge-primary ml-2">{{
@@ -34,7 +37,7 @@
     <div v-else class="mb-5">
       <h6>You have no sets yet. Click the button below to create one.</h6>
     </div>
-    <div class="mb-2">
+    <div>
       <button
         v-if="!creating"
         @click="toggleCreate"
@@ -75,7 +78,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8000/flashcard-sets/", {
+      .get("flashcard-sets/", {
         headers: {
           Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },

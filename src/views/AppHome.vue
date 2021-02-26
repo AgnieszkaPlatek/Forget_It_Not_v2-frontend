@@ -18,18 +18,36 @@
 </template>
   
 <script>
+import axios from "axios";
 export default {
   name: "AppHome",
   components: {},
   props: [],
   data() {
     return {
-      username: "Aga",
-      num_sets: 3,
-      num_flashcards: 50,
+      username: "",
+      num_sets: 0,
+      num_flashcards: 0,
     };
   },
   methods: {},
+  mounted() {
+    axios
+      .get("auth/users/me/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
+      .then(
+        (response) => (
+          (this.username = response.data["username"]),
+          (this.num_sets = response.data["num_sets"])(
+            (this.num_flashcards = response.data["num_flashcards"])
+          )
+        )
+      )
+      .catch((error) => console.log(error));
+  },
 };
 </script>
 

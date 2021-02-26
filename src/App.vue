@@ -3,17 +3,20 @@
   <div class="content-section">
     <div class="mx-3 mx-md-5">
       <router-view />
+      <!-- <NavArrows /> -->
     </div>
   </div>
 </template>
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
+// import NavArrows from "./components/NavArrows.vue";
 
 export default {
   name: "App",
   components: {
     AppHeader,
+    // NavArrows,
   },
 };
 </script>

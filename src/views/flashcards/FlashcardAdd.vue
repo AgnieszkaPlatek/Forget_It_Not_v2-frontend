@@ -47,7 +47,7 @@ export default {
     addFlashcard() {
       axios({
         method: "post",
-        url: "http://localhost:8000/flashcards/",
+        url: "flashcards/",
         data: {
           flashcard_set: this.id,
           front: this.front,

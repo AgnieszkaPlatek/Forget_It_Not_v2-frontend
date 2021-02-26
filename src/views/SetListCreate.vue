@@ -19,7 +19,7 @@ export default {
     setCreate() {
       axios({
         method: "post",
-        url: "http://localhost:8000/flashcard-sets/",
+        url: "flashcard-sets/",
         data: {
           name: this.name,
         },

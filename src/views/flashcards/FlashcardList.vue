@@ -1,9 +1,15 @@
 <template>
   <section class="my-4">
     <div class="text-center">
-      <div class="mb-2">
+      <div v-if="setname" class="mb-2">
         <h1 class="h2">
           {{ setname
+          }}<span class="badge badge-primary ml-3">{{ num_flashcards }}</span>
+        </h1>
+      </div>
+      <div v-else>
+        <h1 class="h2">
+          {{ set_name
           }}<span class="badge badge-primary ml-3">{{ num_flashcards }}</span>
         </h1>
       </div>
@@ -37,7 +43,7 @@
       <div class="btn-group col-12 mb-1">
         <button
           type="button"
-          class="btn btn-square btn-block btn-learn btn-lg btn-primary text-uppercase dropdown-toggle"
+          class="btn btn-learn btn-lg btn-primary text-uppercase dropdown-toggle"
           data-toggle="dropdown"
         >
           Learn
@@ -53,48 +59,85 @@
       </div>
     </div>
     <div class="container">
-      <table class="table table-hover col-11">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Front</th>
+            <th>Back</th>
+            <th>Added</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr v-for="flashcard in flashcards" :key="flashcard.id">
-            <router-link
-              :to="{ name: 'FlashcardDetail', params: { id: flashcard.id } }"
-            >
-              <td>{{ flashcard.back }}</td>
-              <td>{{ flashcard.front }}</td>
-              <td>
-                <small>{{ flashcard.added }}</small>
-              </td>
-            </router-link>
+          <tr
+            v-for="flashcard in flashcards"
+            :key="flashcard.id"
+            @click="goToDetail(flashcard.id)"
+          >
+            <td>{{ flashcard.front }}</td>
+            <td>{{ flashcard.back }}</td>
+            <td>
+              <small>{{ flashcard.added }}</small>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <div v-if="next_page || previous_page" class="btn-group row ml-5">
+      <div v-if="previous_page">
+        <router-link
+          :to="{ name: 'FlashcardList', params: { id: this.id } }"
+          class="btn btn-outline-primary btn-sm mr-2"
+          >First</router-link
+        >
+        <router-link
+          :to="{ name: 'FlashcardList', params: { id: this.id } }"
+          class="btn btn-outline-primary btn-sm mr-2"
+        >
+          Previous</router-link
+        >
+      </div>
+      <div v-for="page in pages" :key="page" class="btn-group">
+        <button
+          type="button"
+          @click="goToPage(page)"
+          class="btn btn-outline-primary btn-sm mr-2"
+        >
+          {{ page }}
+        </button>
+      </div>
+
+      <div v-if="next_page">
+        <router-link to="" class="btn btn-outline-primary btn-sm mr-2"
+          >Next</router-link
+        >
+        <router-link
+          :to="{ name: 'FlashcardList', params: { id: id } }"
+          class="btn btn-outline-primary btn-sm"
+        >
+          Last</router-link
+        >
+      </div>
+    </div>
+    <p class="mt-3">You are on page {{ current_page }}</p>
     <div class="fluid-container mt-5 ml-3">
-      <div class="mb-3">
-        <a
-          href=""
-          class="btn btn-add mb-1 px-5 py-3"
-          role="button"
-          aria-pressed="true"
-          >Add Flashcard</a
+      <div class="mb-3 text-center">
+        <router-link
+          :to="{ name: 'FlashcardAdd' }"
+          class="btn btn-primary mb-1 px-5 py-3"
+          >Add Flashcard</router-link
         >
       </div>
-      <div class="row">
-        <a
-          href=""
-          class="btn btn-update btn-sm ml-3 px-5"
-          role="button"
-          aria-pressed="true"
-          >Update Set</a
-        >
-        <a
-          href=""
-          class="btn btn-delete btn-sm ml-3 px-5"
-          role="button"
-          aria-pressed="true"
-          >Delete Set</a
-        >
-      </div>
+    </div>
+    <div class="row">
+      <a href="" class="btn btn-update btn-sm ml-3 px-5">Update Set</a>
+      <router-link
+        :to="{
+          name: 'SetDelete',
+          params: { id: id, setname: setname },
+        }"
+        class="btn btn-delete btn-sm ml-3 px-5"
+        >Delete Set</router-link
+      >
     </div>
   </section>
 </template>
@@ -107,7 +150,7 @@ export default {
   components: {
     SearchBar,
   },
-  props: ["id"],
+  props: ["id", "set_name"],
   data() {
     return {
       created: "", //20 January, 2021
@@ -116,34 +159,71 @@ export default {
       username: "",
       flashcards: [],
       authenticated: true,
+      next_link: "",
+      previous_link: "",
+      previous_page: 0,
+      current_page: 0,
+      next_page: 0,
+      pages: [],
+      query_url: "",
+      page_url: "",
+      url: "flashcard-list/" + this.id,
     };
   },
   mounted() {
-    axios
-      .get("http://localhost:8000/flashcard-list/" + this.id, {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
-      .then(
-        (response) => (
-          (this.flashcards = response.data),
-          (this.num_flashcards = response.data.length),
-          (this.setname = response.data[0]["set_name"]),
-          (this.username = response.data[0]["owner_name"])(
-            (this.created = response.data[0]["set_created"])
+    console.log("Mounted");
+    this.loadFlashcards(this.url);
+  },
+  methods: {
+    loadFlashcards(url) {
+      console.log("Loading");
+      axios
+        .get(url, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
+        .then((response) =>
+          ((this.flashcards = response.data["results"]),
+          (this.num_flashcards = response.data["count"]),
+          (this.next_page = response.data["next_page"]),
+          (this.previous_page = response.data["previous_page"]),
+          (this.setname = response.data["results"][0]["set_name"]),
+          (this.username = response.data["results"][0]["owner_name"]),
+          (this.created = response.data["results"][0]["set_created"]),
+          (this.pages = response.data["pages"]),
+          (this.current_page = response.data["current_page"]),
+          (this.next_link = response.data["links"]["next"]),
+          (this.previous_link =
+            response.data["links"]["previous"])).catch((error) =>
+            console.log(error)
           )
-        )
-      )
-      .catch((error) => console.log(error));
+        );
+    },
+    goToDetail(id) {
+      this.$router.push({
+        name: "FlashcardDetail",
+        params: { id: id },
+      });
+    },
+    goToPage(page) {
+      this.current_page = page;
+      let url = this.url + "/?page=" + page;
+      this.loadFlashcards(url);
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+th {
+  color: #000000;
+  font-size: 1.1em;
+}
 td {
   color: #2b2a2a;
-  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.1em;
 }
 </style>

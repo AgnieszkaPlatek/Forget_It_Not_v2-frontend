@@ -18,6 +18,10 @@ img {
   box-shadow: 4px 9px 20px -4px rgba(0,0,0,0.37);
   justify-content: center;
   padding-bottom: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  margin-top: 10px;
 }
 
 .account-img {
@@ -158,8 +162,6 @@ img {
     font-weight: bold;
 }
 
-
-
 .btn-check {
     background: #3590F0;
     color: #ffffff;
@@ -195,8 +197,9 @@ img {
 }
 
 .btn-delete:hover {
-    background: #444444;
+    background: #b53219;
     color: #ffffff;
+    font-weight: bold;
 }
 
 .btn-back {
