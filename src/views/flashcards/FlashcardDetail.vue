@@ -109,7 +109,7 @@ export default {
           (response) => (
             (this.front = response.data["front"]),
             (this.back = response.data["back"]),
-            (this.cardtext = this.back),
+            (this.cardtext = this.front),
             (this.username = response.data["owner_name"]),
             (this.added = response.data["added"]),
             (this.set_id = response.data["flashcard_set"]),

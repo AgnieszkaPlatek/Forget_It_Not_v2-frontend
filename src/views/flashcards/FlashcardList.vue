@@ -1,15 +1,17 @@
 <template>
   <section class="my-4">
+    <p>{{ setname }}</p>
+    <p>{{ set_name }}</p>
     <div class="text-center">
-      <div v-if="setname" class="mb-2">
+      <div v-if="set_name" class="mb-2">
         <h1 class="h2">
-          {{ setname
+          {{ set_name
           }}<span class="badge badge-primary ml-3">{{ num_flashcards }}</span>
         </h1>
       </div>
       <div v-else>
         <h1 class="h2">
-          {{ set_name
+          {{ setname
           }}<span class="badge badge-primary ml-3">{{ num_flashcards }}</span>
         </h1>
       </div>
@@ -140,6 +142,14 @@
       >
     </div>
   </section>
+  <div class="text-center">
+    <router-link
+      :to="{ name: 'SetList', params: { id: id } }"
+      class="btn btn-back btn-sm my-3 px-5"
+      role="button"
+      >Back</router-link
+    >
+  </div>
 </template>
   
 <script>
@@ -150,12 +160,11 @@ export default {
   components: {
     SearchBar,
   },
-  props: ["id", "set_name"],
+  props: ["id", "setname"],
   data() {
     return {
       created: "", //20 January, 2021
       num_flashcards: 0,
-      setname: "",
       username: "",
       flashcards: [],
       authenticated: true,
@@ -168,6 +177,7 @@ export default {
       query_url: "",
       page_url: "",
       url: "flashcard-list/" + this.id,
+      set_name: "",
     };
   },
   mounted() {
@@ -188,7 +198,7 @@ export default {
           (this.num_flashcards = response.data["count"]),
           (this.next_page = response.data["next_page"]),
           (this.previous_page = response.data["previous_page"]),
-          (this.setname = response.data["results"][0]["set_name"]),
+          (this.set_name = response.data["results"][0]["set_name"]),
           (this.username = response.data["results"][0]["owner_name"]),
           (this.created = response.data["results"][0]["set_created"]),
           (this.pages = response.data["pages"]),

@@ -15,7 +15,7 @@
       </form>
     </div>
     <div v-if="added" id="after" class="text-center my-3">
-      <h3>Flashcard has been added!</h3>
+      <h5 class="alert alert-info">Flashcard has been added!</h5>
       <button @click="addAnother" class="btn btn-primary btn-block mt-4 px-5">
         Add another
       </button>
@@ -25,7 +25,7 @@
         :to="{ name: 'FlashcardList', params: { id: id } }"
         class="btn btn-back btn-sm my-3 px-5"
         role="button"
-        >Cancel</router-link
+        >Back</router-link
       >
     </div>
   </section>

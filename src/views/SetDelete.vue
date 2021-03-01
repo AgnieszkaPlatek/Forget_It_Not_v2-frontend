@@ -40,7 +40,7 @@ export default {
       }).catch((err) => {
         console.log("error in request", err);
       });
-      this.$forceUpdate();
+      // this.$forceUpdate();
       this.$router.push({ name: "SetList" });
     },
   },

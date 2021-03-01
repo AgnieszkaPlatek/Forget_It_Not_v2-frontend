@@ -18,7 +18,7 @@
               <router-link
                 :to="{
                   name: 'FlashcardList',
-                  params: { id: set.id, set_name: set.name },
+                  params: { id: set.id, setname: set.name },
                 }"
                 class="mb-3"
                 ><b>{{ set.name }}</b>

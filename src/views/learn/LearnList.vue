@@ -63,17 +63,46 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "LearnIntro",
   data() {
     return {
-      total_flashcards: 115,
-      big_sets: [
-        { id: 1, name: "angielski", num_flashcards: 60 },
-        { id: 2, name: "niemiecki", num_flashcards: 40 },
-      ],
-      small_sets: [{ id: 3, name: "hiszpański", num_flashcards: 15 }],
+      total_flashcards: 0,
+      sets: [],
     };
+  },
+  mounted() {
+    axios
+      .get("flashcard-sets/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
+      .then(
+        (response) => (
+          (this.sets = response.data),
+          (this.username = response.data[0]["owner_name"]),
+          (this.num_sets = response.data.length)
+        )
+      );
+    axios
+      .get("auth/users/me", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
+      .then(
+        (response) => (this.total_flashcards = response.data["num_flashcards"])
+      );
+  },
+  computed: {
+    big_sets() {
+      return this.sets.filter((set) => set.num_flashcards > 20);
+    },
+    small_sets() {
+      return this.sets.filter((set) => set.num_flashcards <= 20);
+    },
   },
 };
 // to do compute big sets and small sets
