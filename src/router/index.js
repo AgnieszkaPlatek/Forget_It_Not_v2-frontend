@@ -38,25 +38,37 @@ const routes = [
         path: '/flashcards/:id',
         name: 'FlashcardDetail',
         component: FlashcardDetail,
-        props: true
+        props: true,
+        beforeEnter(to, from, next) {
+            next(Number.isInteger(Number(to.params.id)))
+        }
     },
     {
         path: '/sets/:id/add',
         name: 'FlashcardAdd',
         component: FlashcardAdd,
-        props: true
+        props: true,
+        beforeEnter(to, from, next) {
+            next(Number.isInteger(Number(to.params.id)))
+        }
     },
     {
         path: '/sets/:id',
         name: 'FlashcardList',
         component: FlashcardList,
-        props: true
+        props: true,
+        beforeEnter(to, from, next) {
+            next(Number.isInteger(Number(to.params.id)))
+        }
     },
     {
         path: '/sets/:id/delete',
         name: 'SetDelete',
         component: SetDelete,
-        props: true
+        props: true,
+        beforeEnter(to, from, next) {
+            next(Number.isInteger(Number(to.params.id)))
+        }
     },
     {
         path: '/register',
