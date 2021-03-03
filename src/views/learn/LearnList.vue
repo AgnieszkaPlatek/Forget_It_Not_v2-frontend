@@ -40,7 +40,14 @@
       <div class="fluid-container">
         <div v-for="set in small_sets" :key="set.id">
           <div class="mx-3">
-            <a
+            <router-link
+              :to="{
+                name: 'LearnSession',
+                params: {
+                  setname: set.name,
+                  cards: JSON.stringify(set.flashcards),
+                },
+              }"
               class="btn btn-grey btn-lg btn-block mb-1"
               role="button"
               aria-pressed="true"
@@ -48,7 +55,7 @@
               <span class="badge badge-primary ml-2">{{
                 set.num_flashcards
               }}</span>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -65,7 +72,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "LearnIntro",
+  name: "LearnList",
   data() {
     return {
       total_flashcards: 0,

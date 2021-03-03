@@ -3,10 +3,11 @@ import AppHome from '../views/AppHome.vue'
 import AppWelcome from '../views/AppWelcome.vue'
 import SetList from '../views/SetList.vue'
 import SetDelete from '../views/SetDelete.vue'
-import LearnList from '../views/learn/LearnList.vue'
 import FlashcardDetail from '../views/flashcards/FlashcardDetail.vue'
 import FlashcardAdd from '../views/flashcards/FlashcardAdd.vue'
 import FlashcardList from '../views/flashcards/FlashcardList.vue'
+import LearnList from '../views/learn/LearnList.vue'
+import LearnSession from '../views/learn/LearnSession.vue'
 import UserRegister from '../views/users/UserRegister.vue'
 import UserLogin from '../views/users/UserLogin.vue'
 import UserProfile from '../views/users/UserProfile.vue'
@@ -28,11 +29,6 @@ const routes = [
         path: '/sets',
         name: 'SetList',
         component: SetList
-    },
-    {
-        path: '/learn',
-        name: 'LearnList',
-        component: LearnList
     },
     {
         path: '/flashcards/:id',
@@ -69,6 +65,24 @@ const routes = [
         beforeEnter(to, from, next) {
             next(Number.isInteger(Number(to.params.id)))
         }
+    },
+    {
+        path: '/learn-list',
+        name: 'LearnList',
+        component: LearnList,
+        props: true
+    },
+    {
+        path: '/learn',
+        name: 'LearnSession',
+        component: LearnSession,
+        props: true
+    },
+    {
+        path: '/learn/all',
+        name: 'LearnAll',
+        component: LearnSession,
+        props: true
     },
     {
         path: '/register',

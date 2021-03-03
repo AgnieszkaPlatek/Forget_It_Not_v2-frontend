@@ -1,15 +1,22 @@
 <template>
-  <flashcard-card :cardtext="flashcard.front" />
-  <div class="fluid-container">
-    <a class="btn btn-check d-inline-block btn-lg col-12 col-md-6 mb-3" href=""
-      >Check if you know</a
-    >
+  <flashcard-card :cardtext="text" />
+  <div class="text-center">
+    <button @click="$emit('give_answer')" class="btn btn-check btn-lg my-5">
+      Check if you know
+    </button>
   </div>
 </template>
 
 <script>
 import FlashcardCard from "@/components/FlashcardCard.vue";
-export default {};
+export default {
+  name: "LearnSessionQuestion",
+  props: ["text"],
+  components: {
+    FlashcardCard,
+  },
+  emits: ["give_answer"],
+};
 </script>
 
 <style>

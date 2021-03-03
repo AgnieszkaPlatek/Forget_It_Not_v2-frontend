@@ -1,24 +1,37 @@
 <template>
   <section class="mt-3 mx-2">
-    <div v-if="set && !finished" class="ml-2 mb-4 mt-4">
+    <div v-if="setname && !finished" class="ml-2 mb-4 mt-4">
       <h1 class="h2">
-        Learning set <strong>{{ set.name }}</strong>
+        Learning set <strong>{{ setname }}</strong>
       </h1>
     </div>
-    <div v-else-if="!set && !finished" class="ml-2 mb-4 mt-4">
+    <div v-else-if="!setname && !finished" class="ml-2 mb-4 mt-4">
       <h2>Learning all flashcards</h2>
     </div>
-    <div class="ml-3 mb-5">
-      <progress id="learning" value="{{ learned }}" max="{{ total }}">
+    <div v-if="!question && !answer && !finished" class="mb-3 pt-3">
+      <button @click="ask_question" class="btn btn-b mb-3 px-5">START</button>
+    </div>
+
+    <div v-if="question || answer" class="ml-3 mb-5">
+      <progress id="learning" :value="learned" :max="total">
         {{ learned }}
       </progress>
       <label class="ml-2" for="learning"
         ><b>{{ learned }} / {{ total }}</b></label
       >
     </div>
-    <LearnSessionQuestion v-if="question" />
-    <LearnSessionAnswer v-if="answer" />
-    <LearnSessionFinished v-if="finished" />
+    <div v-if="question">{{ flashcard.front }}</div>
+    <LearnSessionQuestion
+      v-if="question"
+      :text="flashcard.front"
+      @give_answer="show_answer"
+    />
+    <LearnSessionAnswer
+      v-if="answer"
+      :text="flashcard.back"
+      @mark_learned="learn"
+      @not_learned="ask_question"
+    />
     <div class="row">
       <div class="col-4 offset-4 col-md-5 offset-md-5"></div>
       <router-link
@@ -34,13 +47,27 @@
 <script>
 import LearnSessionQuestion from "./LearnSessionQuestion.vue";
 import LearnSessionAnswer from "./LearnSessionAnswer.vue";
-import LearnSessionFinished from "./LearnSessionFinished.vue";
+// import LearnSessionFinished from "./LearnSessionFinished.vue";
 export default {
   name: "LearnSession",
+  props: ["setname", "cards"],
   components: {
     LearnSessionQuestion,
     LearnSessionAnswer,
-    LearnSessionFinished,
+    // LearnSessionFinished,
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.finished) {
+      next(true);
+    } else {
+      const response = confirm(
+        "You have not finished learning. Are you sure you want to leave?"
+      );
+      next(response);
+    }
+  },
+  mounted() {
+    console.log("Mounted");
   },
   data() {
     return {
@@ -48,18 +75,15 @@ export default {
       answer: false,
       finished: false,
       learned: 0,
-      total: 5,
+      flashcards: JSON.parse(this.cards),
+      total: JSON.parse(this.cards).length,
       flashcard: null,
-      flashcards: [
-        { id: 1, front: "pies", back: "dog", added: "20 January, 2021" },
-        { id: 2, front: "kot", back: "cat", added: "20 January, 2021" },
-        { id: 3, front: "mysz", back: "mouse", added: "21 January, 2021" },
-        { id: 4, front: "koń", back: "horse", added: "22 January, 2021" },
-        { id: 5, front: "krowa", back: "cow", added: "22 January, 2021" },
-      ],
     };
   },
   methods: {
+    delete_flashcard(flashcard) {
+      this.flashcards.splice(this.flashcards.indexOf(flashcard), 1);
+    },
     pick_flashcard() {
       var index = Math.floor(Math.random() * this.length);
       this.flashcard = this.flashcards[index];
@@ -71,7 +95,7 @@ export default {
       this.pick_flashcard();
       console.log("question asked");
     },
-    give_answer() {
+    show_answer() {
       this.answer = true;
       this.question = false;
       console.log("answer showed");
@@ -82,13 +106,12 @@ export default {
       this.flashcards.splice(this.flashcards.indexOf(this.flashcard), 1);
       console.log("flashcard learned and removed");
       if (this.learned === this.total) {
-        alert("Congratulations! You finished learning your flashcards!");
+        this.finished = true;
         return;
       }
       this.ask_question();
     },
   },
-
   computed: {
     length() {
       return this.flashcards.length;
@@ -97,5 +120,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.rows {
+  cursor: pointer;
+}
 </style>
