@@ -7,9 +7,14 @@
       </h1>
       <h2 class="h5">You will permanently loose all your flashcards!</h2>
     </div>
-    <button @click="setDelete" class="btn btn-delete px-5" type="submit">
+    <a
+      href="/sets"
+      @click="setDelete"
+      class="btn btn-delete px-5"
+      type="submit"
+    >
       Yes, Delete
-    </button>
+    </a>
     <router-link
       :to="{ name: 'SetList' }"
       class="btn btn-back ml-3"
@@ -40,8 +45,6 @@ export default {
       }).catch((err) => {
         console.log("error in request", err);
       });
-      // this.$forceUpdate();
-      this.$router.push({ name: "SetList" });
     },
   },
 };
