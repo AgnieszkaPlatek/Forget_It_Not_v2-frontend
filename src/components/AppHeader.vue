@@ -32,13 +32,33 @@
           <!-- Navbar Right Side -->
           <div v-if="authenticated" class="navbar-nav">
             <img class="rounded-circle nav-img" src="@/assets/default.jpg" />
-            <a class="nav-item nav-link" href="">user</a>
-            <a class="nav-item nav-link" href="">Log out</a>
+            <router-link
+              :to="{ name: 'UserProfile' }"
+              class="nav-item nav-link"
+              href=""
+              >{{ username }}</router-link
+            >
+            <router-link
+              :to="{ name: 'UserLogout' }"
+              class="nav-item nav-link"
+              href=""
+              >Log out</router-link
+            >
           </div>
           <!-- {% else %} -->
           <div v-else class="navbar-nav">
-            <a class="nav-item nav-link" href="">Log in</a>
-            <a class="nav-item nav-link" href="">Register</a>
+            <router-link
+              :to="{ name: 'UserLogin' }"
+              class="nav-item nav-link"
+              href=""
+              >Log in</router-link
+            >
+            <router-link
+              :to="{ name: 'UserRegister' }"
+              class="nav-item nav-link"
+              href=""
+              >Register</router-link
+            >
           </div>
         </div>
       </div>
@@ -49,12 +69,12 @@
 <script>
 export default {
   name: "Nav",
+  props: ["username"],
   data() {
     return {
       authenticated: true,
     };
   },
-  props: {},
 };
 </script>
 
