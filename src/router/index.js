@@ -6,11 +6,14 @@ import SetDelete from '../views/SetDelete.vue'
 import FlashcardDetail from '../views/flashcards/FlashcardDetail.vue'
 import FlashcardAdd from '../views/flashcards/FlashcardAdd.vue'
 import FlashcardList from '../views/flashcards/FlashcardList.vue'
+import FlashcardFilter from '../views/flashcards/FlashcardFilter.vue'
 import LearnList from '../views/learn/LearnList.vue'
 import LearnSession from '../views/learn/LearnSession.vue'
 import UserRegister from '../views/users/UserRegister.vue'
 import UserLogin from '../views/users/UserLogin.vue'
+import UserLogout from '../views/users/UserLogout.vue'
 import UserProfile from '../views/users/UserProfile.vue'
+import UserProfileDelete from '../views/users/UserProfileDelete.vue'
 import NotFound from '../views/NotFound.vue'
 
 
@@ -58,6 +61,15 @@ const routes = [
         }
     },
     {
+        path: '/sets/filter/:id',
+        name: 'FlashcardFilter',
+        component: FlashcardFilter,
+        props: true,
+        beforeEnter(to, from, next) {
+            next(Number.isInteger(Number(to.params.id)))
+        }
+    },
+    {
         path: '/sets/:id/delete',
         name: 'SetDelete',
         component: SetDelete,
@@ -78,12 +90,12 @@ const routes = [
         component: LearnSession,
         props: true
     },
-    {
-        path: '/learn/all',
-        name: 'LearnAll',
-        component: LearnSession,
-        props: true
-    },
+    // {
+    //     path: '/learn/all',
+    //     name: 'LearnAll',
+    //     component: LearnSession,
+    //     props: true
+    // },
     {
         path: '/register',
         name: 'UserRegister',
@@ -95,14 +107,28 @@ const routes = [
         component: UserLogin
     },
     {
+        path: '/logout',
+        name: 'UserLogout',
+        component: UserLogout
+    },
+    {
         path: '/profile',
         name: 'UserProfile',
         component: UserProfile
     },
     {
+        path: '/profile/delete',
+        name: 'UserProfileDelete',
+        component: UserProfileDelete
+    },
+    {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         component: NotFound
+    },
+    {
+        path: '',
+        redirect: 'sets'
     }
 ]
 

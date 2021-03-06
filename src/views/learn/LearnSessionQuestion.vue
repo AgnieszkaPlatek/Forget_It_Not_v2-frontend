@@ -24,5 +24,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.btn-check {
+  background: #3590f0;
+  color: #ffffff;
+}
+
+.btn-check:hover {
+  background: #3380d1;
+  color: #ffffff;
+}
 </style>

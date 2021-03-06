@@ -1,11 +1,15 @@
 <template>
-  <AppHeader />
-  <div class="content-section">
-    <div class="mx-3 mx-md-5">
-      <router-view />
-      <!-- <NavArrows /> -->
+  <AppHeader :username="username" />
+  <main role="main" class="container">
+    <div class="col-xl-11">
+      <div class="content-section">
+        <div class="mx-3 mx-md-5">
+          <router-view />
+          <!-- <NavArrows /> -->
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -17,6 +21,11 @@ export default {
   components: {
     AppHeader,
     // NavArrows,
+  },
+  data() {
+    return {
+      username: "aga",
+    };
   },
 };
 </script>

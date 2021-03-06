@@ -2,7 +2,7 @@
   <form @submit="setRename">
     <label>New name:</label>
     <input type="name" required v-model="new_name" />
-    <button class="btn btn-primary px-5" type="submit">submit</button>
+    <button class="btn btn-primary px-5" type="submit">Rename</button>
   </form>
 </template>
 

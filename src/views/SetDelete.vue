@@ -1,6 +1,6 @@
 <template>
   <section class="mt-4 mx-1">
-    <div id="warning">
+    <div class="warning">
       <h1 class="h3">
         Are you sure you want to delete your set <b>{{ setname }}</b
         >?
@@ -51,11 +51,4 @@ export default {
 </script>
 
 <style scoped>
-#warning {
-  background-color: #f8bdb1;
-  max-width: 700px;
-  padding: 20px 20px 20px 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-}
 </style>

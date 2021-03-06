@@ -49,64 +49,6 @@ img {
 
 @media (max-width: 991px)
 {
-  .search-container {
-    float: none;
-  }
-   .search-container input[type=text], .search-container button {
-    text-align: left;
-    margin: 0;
-    padding: 6px 10px;
-  }
-}
-
-#set_search, #set_filter{
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  color: #000000;
-  letter-spacing: 1px;
-  word-spacing: 4px;
-}
-
-#set_filter{
-    background: #dddddd;
-}
-
-
-#set_search{
-    background: #eeeeee;
-}
-
-#set_search:hover, #set_filter:hover{
-  background: #bbbbbb;
-}
-
-#lm {
-    margin-left: 0px;
-}
-
-.filter button{
-  padding: 6px 12px;
-  background: #80c4fd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-  text-align: right;
-}
-
-.filter button:hover {
-    background: #46a9fc;
-}
-
-.filter input[type=date] {
-  padding: 6px;
-  font-size: 17px;
-  border: none;
-  background: #bddefa;
-}
-
-@media (max-width: 991px)
-{
     #min_date {
         margin-bottom: 20px;
     }
@@ -114,8 +56,6 @@ img {
         margin-bottom: 0px;
     }
 }
-
-/* Buttons */
 
 .btn-lang {
     background: #C8EDA8;
@@ -129,16 +69,10 @@ img {
     background: #F1D8BB;
 }
 
-.btn-square {
-    border-radius: 0;
-}
-
-
 .btn-db {
     background: #0b61bc;
     color: #ffffff;
 }
-
 
 .btn-lb {
     background: #5BA9FC;
@@ -162,35 +96,6 @@ img {
     font-weight: bold;
 }
 
-.btn-check {
-    background: #3590F0;
-    color: #ffffff;
-}
-
-.btn-check:hover {
-    background: #3380d1;
-    color: #ffffff;
-}
-
-.btn-not {
-    background: #fc836d;
-    color: #ffffff;
-}
-
-.btn-not:hover {
-    background: #f35335;
-    color: #ffffff;
-}
-
-.btn-yes {
-    background: #77b6f9;
-    color: #ffffff;
-}
-
-.btn-yes:hover {
-    background: #3590F0;
-}
-
 .btn-delete {
     background: #f35335;
     color: #ffffff;
@@ -199,7 +104,6 @@ img {
 .btn-delete:hover {
     background: #b53219;
     color: #ffffff;
-    font-weight: bold;
 }
 
 .btn-back {
@@ -252,13 +156,20 @@ table a {
     background: #5ba9fc;
     letter-spacing: 1px;
     border: none;
-    max-width: 700px;
+    max-width: 100%;
     color: #ffffff;
   }
   
-  .btn-learn:hover {
+.btn-learn:hover {
     background: #3590f0;
     color: #ffffff;
     font-weight: bold;
+}
+
+.warning {
+    background-color: #f8bdb1;
+    max-width: 700px;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
   }
-  

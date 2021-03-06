@@ -44,28 +44,37 @@
       </div>
     </div>
     <div class="container mt-5 ml-3">
-      <router-link
-        :to="{ name: 'FlashcardAdd' }"
-        class="btn btn-primary px-5 mb-3"
-        role="button"
-        aria-pressed="true"
-        >Add Flashcard</router-link
-      >
-      <div class="row mb-3">
-        <router-link
-          :to="{ name: 'FlashcardList', params: { id: set_id } }"
-          class="btn btn-back px-5 mx-3"
-          >Back</router-link
-        >
-        <a href="" class="btn btn-update mr-3" role="button" aria-pressed="true"
-          >Edit</a
-        >
-        <router-link
-          @click="deleteFlashcard"
-          :to="{ name: 'FlashcardList', params: { id: set_id } }"
-          class="btn btn btn-delete"
-          >Delete</router-link
-        >
+      <div class="row mb-3"></div>
+      <div class="fluid-container mt-5">
+        <div class="mb-3 text-center">
+          <router-link
+            :to="{ name: 'FlashcardAdd' }"
+            class="btn btn-primary mb-3 px-5 py-3"
+            >ADD FLASHCARD</router-link
+          >
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="btn-group">
+          <a
+            href=""
+            class="btn btn-update btn-sm px-5"
+            role="button"
+            aria-pressed="true"
+            >Edit</a
+          >
+          <router-link
+            @click="deleteFlashcard"
+            :to="{ name: 'FlashcardList', params: { id: set_id } }"
+            class="btn btn-delete btn-sm ml-2 px-5"
+            >Delete</router-link
+          >
+          <router-link
+            :to="{ name: 'FlashcardList', params: { id: set_id } }"
+            class="btn btn-back btn-sm px-5 mx-3"
+            >Back</router-link
+          >
+        </div>
       </div>
     </div>
   </section>

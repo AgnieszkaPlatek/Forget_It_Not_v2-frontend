@@ -2,7 +2,7 @@
   <form @submit="setCreate">
     <label>Name:</label>
     <input type="name" required v-model="name" />
-    <button class="btn btn-primary px-4" type="submit">Create</button>
+    <button class="btn btn-primary px-5" type="submit">Create</button>
   </form>
 </template>
 
@@ -41,13 +41,13 @@ form {
   background: white;
   text-align: left;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 label {
   color: #555;
   display: inline-block;
-  font-size: 1.2em;
-  margin: 20px 0 15px;
+  font-size: 1.1em;
+  margin: 25px 0 10px;
   font-weight: bold;
 }
 input {

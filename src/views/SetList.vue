@@ -1,6 +1,6 @@
 <template>
   <section class="mt-4 mr-md-5">
-    <div class="mb-4">
+    <div class="mb-5 text-center">
       <h1 class="h3">Flashcard Sets</h1>
       <h6>by {{ username }}</h6>
     </div>
@@ -18,7 +18,12 @@
               <router-link
                 :to="{
                   name: 'FlashcardList',
-                  params: { id: set.id, setname: set.name },
+                  params: {
+                    id: set.id,
+                    setname: set.name,
+                    user: username,
+                    date: set.created,
+                  },
                 }"
                 class="mb-3"
                 ><b>{{ set.name }}</b>
@@ -49,7 +54,9 @@
     </div>
     <div v-if="creating">
       <SetListCreate />
-      <button @click="toggleCreate" class="btn btn-back ml-3">Cancel</button>
+      <button @click="toggleCreate" class="btn btn-back ml-4 btn-sm px-3">
+        Cancel
+      </button>
     </div>
   </section>
 </template>

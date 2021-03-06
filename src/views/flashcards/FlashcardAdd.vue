@@ -15,15 +15,19 @@
       </form>
     </div>
     <div v-if="added" id="after" class="text-center my-3">
-      <h5 class="alert alert-info">Flashcard has been added!</h5>
-      <button @click="addAnother" class="btn btn-primary btn-block mt-4 px-5">
+      <h5 class="alert">Flashcard has been added!</h5>
+      <button
+        @click="addAnother"
+        type="submit"
+        class="btn btn-primary btn-block mt-4 px-5"
+      >
         Add another
       </button>
     </div>
     <div class="text-center">
       <router-link
         :to="{ name: 'FlashcardList', params: { id: id } }"
-        class="btn btn-back btn-sm my-3 px-5"
+        class="btn btn-back btn-sm my-4 px-5"
         role="button"
         >Back</router-link
       >
@@ -77,14 +81,13 @@ form {
   margin: auto;
   background: white;
   text-align: left;
-  padding: 20px;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 label {
   color: #555;
   display: inline-block;
-  font-size: 1.2em;
-  margin: 20px 0 15px;
+  font-size: 1.1em;
+  margin: 25px 0 5px;
   font-weight: bold;
 }
 input {
@@ -95,9 +98,5 @@ input {
   border-bottom: 2px solid #ddd;
   color: #555;
   background-color: #ffffff;
-}
-#after {
-  max-width: 500px;
-  margin: auto;
 }
 </style>
