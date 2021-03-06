@@ -1,18 +1,18 @@
 <template>
   <section class="mt-3 mx-2">
-    <div v-if="setname && !finished" class="ml-2 mb-4 mt-4">
+    <div v-if="setname && !finished" class="ml-2 mb-4 mt-4 text-center">
       <h1 class="h2">
         Learning set <strong>{{ setname }}</strong>
       </h1>
     </div>
-    <div v-else-if="!setname && !finished" class="ml-2 mb-4 mt-4">
+    <div v-else-if="!setname && !finished" class="ml-2 mb-4 mt-4 text-center">
       <h2>Learning all flashcards</h2>
     </div>
-    <div v-if="!question && !answer && !finished" class="mb-3 pt-3">
+    <div v-if="!question && !answer && !finished" class="mb-3 pt-3 text-center">
       <button @click="ask_question" class="btn btn-b mb-3 px-5">START</button>
     </div>
-
-    <div v-if="question || answer" class="ml-3 mb-5">
+    <LearnSessionFinished v-if="finished" />
+    <div v-if="question || (answer && !finished)" class="ml-3 mb-5 text-center">
       <progress id="learning" :value="learned" :max="total">
         {{ learned }}
       </progress>
@@ -20,23 +20,22 @@
         ><b>{{ learned }} / {{ total }}</b></label
       >
     </div>
-    <div v-if="question">{{ flashcard.front }}</div>
     <LearnSessionQuestion
       v-if="question"
       :text="flashcard.front"
       @give_answer="show_answer"
     />
     <LearnSessionAnswer
-      v-if="answer"
+      v-if="answer && !finished"
       :text="flashcard.back"
       @mark_learned="learn"
       @not_learned="ask_question"
     />
-    <div class="row">
+    <div v-if="!finished" class="row">
       <div class="col-4 offset-4 col-md-5 offset-md-5"></div>
       <router-link
         :to="{ name: 'SetList' }"
-        class="btn btn-square btn-back btn-sm d-inline-block col-4 col-md-2 mb-3"
+        class="btn btn-back btn-sm d-inline-block col-4 col-md-2 mb-3"
         role="button"
         >Cancel</router-link
       >
@@ -47,14 +46,14 @@
 <script>
 import LearnSessionQuestion from "./LearnSessionQuestion.vue";
 import LearnSessionAnswer from "./LearnSessionAnswer.vue";
-// import LearnSessionFinished from "./LearnSessionFinished.vue";
+import LearnSessionFinished from "./LearnSessionFinished.vue";
 export default {
   name: "LearnSession",
   props: ["setname", "cards"],
   components: {
     LearnSessionQuestion,
     LearnSessionAnswer,
-    // LearnSessionFinished,
+    LearnSessionFinished,
   },
   beforeRouteLeave(to, from, next) {
     if (this.finished) {

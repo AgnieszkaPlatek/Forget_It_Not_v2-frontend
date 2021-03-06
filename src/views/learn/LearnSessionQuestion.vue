@@ -1,7 +1,12 @@
 <template>
   <flashcard-card :cardtext="text" />
   <div class="text-center">
-    <button @click="$emit('give_answer')" class="btn btn-check btn-lg my-5">
+    <br />
+    <button
+      @click="$emit('give_answer')"
+      @keyup.enter="$emit('give_answer')"
+      class="btn btn-check btn-lg my-5"
+    >
       Check if you know
     </button>
   </div>
