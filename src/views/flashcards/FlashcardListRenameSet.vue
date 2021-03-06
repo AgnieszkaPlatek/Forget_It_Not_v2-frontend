@@ -1,29 +1,64 @@
 <template>
-  <form method="POST">
-    <fieldset class="form-group mt-2">
-      <legend class="border-bottom mb-4">Rename</legend>
-    </fieldset>
-    <div class="row mb-4">
-      <button class="btn btn-square btn-primary ml-3 px-4" type="submit">
-        Submit
-      </button>
-      <router-link
-        :to="{ name: 'SetList' }"
-        class="btn btn-square btn-back ml-2"
-        role="button"
-        aria-pressed="true"
-      >
-        Cancel</router-link
-      >
-    </div>
+  <form @submit="setRename">
+    <label>New name:</label>
+    <input type="name" required v-model="new_name" />
+    <button class="btn btn-primary px-5" type="submit">submit</button>
   </form>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: FlashcardListRenameSet,
+  name: "FlashcardListRenameSet",
+  props: ["id"],
+  data() {
+    return {
+      new_name: "",
+    };
+  },
+  methods: {
+    setRename() {
+      console.log("Renaming set");
+      axios({
+        method: "patch",
+        url: "flashcard-sets/" + this.id + "/",
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+        data: {
+          name: this.new_name,
+        },
+      }).catch((err) => {
+        console.log("error in request", err);
+      });
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
+form {
+  max-width: 500px;
+  background: white;
+  text-align: left;
+  padding: 20px;
+  border-radius: 10px;
+}
+label {
+  color: #555;
+  display: inline-block;
+  font-size: 1.1em;
+  margin: 25px 0 10px;
+  font-weight: bold;
+}
+input {
+  display: block;
+  padding: 10px 6px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  color: #555;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
 </style>
