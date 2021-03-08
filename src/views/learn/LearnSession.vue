@@ -2,7 +2,7 @@
   <section class="mt-3 mx-2">
     <div v-if="setname && !finished" class="ml-2 mb-4 mt-4 text-center">
       <h1 class="h2">
-        Learning set <strong>{{ setname }}</strong>
+        Learning flashcards from set <strong>{{ setname }}</strong>
       </h1>
     </div>
     <div v-else-if="!setname && !finished" class="ml-2 mb-4 mt-4 text-center">

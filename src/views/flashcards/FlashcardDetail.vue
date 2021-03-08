@@ -141,7 +141,7 @@ export default {
     deleteFlashcard() {
       axios({
         method: "delete",
-        url: "http://localhost:8000/flashcards/" + this.id,
+        url: "flashcards/" + this.id,
         headers: {
           Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
