@@ -10,6 +10,10 @@
             name: 'LearnIntro',
             params: {
               all: true,
+              part: '',
+              setname: '',
+              set_id: '',
+              cards: '',
             },
           }"
           class="btn btn-learn btn-lg btn-block content-center text-uppercase py-2 mx-auto"
@@ -43,10 +47,13 @@
             <div class="dropdown-menu">
               <router-link
                 :to="{
-                  name: 'LearnSession',
+                  name: 'LearnIntro',
                   params: {
                     setname: set.name,
-                    cards: JSON.stringify(set.flashcards),
+                    set_id: set.id,
+                    part: '',
+                    all: '',
+                    cards: '',
                   },
                 }"
                 class="dropdown-item text-center py-1"
@@ -70,10 +77,13 @@
         <div v-for="set in small_sets" :key="set.id">
           <router-link
             :to="{
-              name: 'LearnSession',
+              name: 'LearnIntro',
               params: {
                 setname: set.name,
-                cards: JSON.stringify(set.flashcards),
+                set_id: set.id,
+                part: '',
+                all: '',
+                cards: '',
               },
             }"
             class="btn btn-grey btn-lg btn-block mb-1"
@@ -112,11 +122,7 @@ export default {
           Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
       })
-      .then(
-        (response) => (
-          (this.sets = response.data), (this.num_sets = response.data.length)
-        )
-      );
+      .then((response) => (this.sets = response.data));
     axios
       .get("auth/users/me/", {
         headers: {
@@ -141,7 +147,6 @@ export default {
     },
   },
 };
-// to do compute big sets and small sets
 </script>
 
 <style scoped>

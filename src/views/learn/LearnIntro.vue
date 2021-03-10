@@ -1,16 +1,16 @@
 <template>
   <section class="mt-4 ml-3">
-    <!-- <div v-if="setname && !part" class="mb-4 pt-2">
+    <div v-if="setname && !part" class="mb-4 pt-2 text-center">
       <h1 class="h2">
-        Learn<strong>{{ setname }}</strong>
+        Learn set <strong>{{ setname }}</strong>
       </h1>
     </div>
-    <div v-else-if="setname && part" class="mb-4 pt-2">
+    <div v-else-if="part" class="mb-4 pt-2 text-center">
       <h1 class="h2">
-        Learn part of<strong>{{ setname }}</strong>
+        Learn part of set <strong>{{ setname }}</strong>
       </h1>
-    </div> -->
-    <div class="mb-4 pt-2 text-center">
+    </div>
+    <div v-else-if="all" class="mb-4 pt-2 text-center">
       <h1 class="h2">Learning all flashcards</h1>
     </div>
 
@@ -20,13 +20,15 @@
         luck!
       </h5>
     </div>
-    >
     <div class="mb-3 text-center">
       <router-link
         :to="{
           name: 'LearnSession',
           params: {
             cards: JSON.stringify(flashcards),
+            setname: setname,
+            part: part,
+            all: all,
           },
         }"
         class="mb-3 py-2 btn btn-b mb-3 px-5"
@@ -41,29 +43,50 @@
 import axios from "axios";
 export default {
   name: "LearnIntro",
-  // props: ["all", "part", "set_id", "setname"],
-  props: ["all"],
+  props: ["all", "part", "set_id", "setname", "cards"],
   data() {
     return {
-      setname: null,
-      part: false,
-      flashcards: null,
+      flashcards: [],
     };
   },
   mounted() {
-    axios
-      .get("flashcards/", {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
-      .then(
-        (response) => (
-          (this.flashcards = response.data),
-          (this.num_flashcards = response.data.length)
-        )
-      );
-    console.log("Flashcards mounted");
+    if (this.setname) {
+      this.loadSet();
+    } else if (this.all) {
+      this.loadAll();
+    }
+  },
+  methods: {
+    loadAll() {
+      axios
+        .get("flashcards/", {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
+        .then(
+          (response) => (
+            (this.flashcards = response.data),
+            (this.num_flashcards = response.data.length)
+          )
+        );
+      console.log("All flashcards loaded");
+    },
+    loadSet() {
+      axios
+        .get("flashcard-sets/" + this.set_id, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
+        .then(
+          (response) => (
+            (this.flashcards = response.data["flashcards"]),
+            (this.num_flashcards = response.data["num_flashcards"])
+          )
+        );
+      console.log("Flashcards from set loaded");
+    },
   },
 };
 </script>

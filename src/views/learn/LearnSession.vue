@@ -1,14 +1,25 @@
 <template>
   <section class="mt-3 mx-2">
-    <div v-if="setname && !finished" class="ml-2 mb-4 mt-4 text-center">
+    <div
+      v-if="setname && !part && !finished"
+      class="ml-2 mb-4 mt-4 text-center"
+    >
       <h1 class="h2">
         Learning flashcards from set <strong>{{ setname }}</strong>
+      </h1>
+    </div>
+    <div v-if="setname && part && !finished" class="ml-2 mb-4 mt-4 text-center">
+      <h1 class="h2">
+        Learning part of set <strong>{{ setname }}</strong>
       </h1>
     </div>
     <div v-else-if="!setname && !finished" class="ml-2 mb-4 mt-4 text-center">
       <h2>Learning all flashcards</h2>
     </div>
-    <div v-if="!question && !answer && !finished" class="mb-3 pt-3 text-center">
+    <div
+      v-if="!question && !answer && !finished && part"
+      class="mb-3 pt-3 text-center"
+    >
       <button @click="ask_question" class="btn btn-b mb-3 px-5">START</button>
     </div>
     <LearnSessionFinished v-if="finished" />
@@ -49,7 +60,7 @@ import LearnSessionAnswer from "./LearnSessionAnswer.vue";
 import LearnSessionFinished from "./LearnSessionFinished.vue";
 export default {
   name: "LearnSession",
-  props: ["setname", "cards"],
+  props: ["setname", "all", "part", "cards"],
   components: {
     LearnSessionQuestion,
     LearnSessionAnswer,
@@ -67,6 +78,7 @@ export default {
   },
   mounted() {
     console.log("Mounted");
+    this.ask_question();
   },
   data() {
     return {
