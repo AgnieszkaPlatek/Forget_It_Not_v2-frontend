@@ -6,7 +6,7 @@
     <p>{{ min_date }}</p>
     <p>{{ max_date }}</p>
     <div class="filter fluid-container mb-4">
-      <form @submit="filter_flashcards">
+      <form @submit="loadFlashcards">
         <div class="row col-12 mb-md-2">
           <label for="min_date" class="h6 col-lg-2 text-left pt-2"
             >from date:</label
@@ -34,35 +34,19 @@
         </div>
       </form>
     </div>
-    <table v-if="flashcards" class="table table-hover mt-5">
-      <thead>
-        <tr>
-          <th>Front</th>
-          <th>Back</th>
-          <th>Added</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="flashcard in flashcards"
-          :key="flashcard.id"
-          @click="goToDetail(flashcard.id)"
-        >
-          <td>{{ flashcard.front }}</td>
-          <td>{{ flashcard.back }}</td>
-          <td>
-            <small>{{ flashcard.added }}</small>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="showing">
+      <FlashcardTable :flashcards="flashcards" />
+    </div>
     <router-link
-      v-if="flashcards"
+      v-if="showing"
       :to="{
-        name: 'LearnSession',
+        name: 'LearnIntro',
         params: {
           setname: set_name,
+          part: true,
           cards: JSON.stringify(flashcards),
+          set_id: id,
+          all: '',
         },
       }"
       class="btn btn-learn btn-block btn-lg btn-primary mb-4"
@@ -80,22 +64,28 @@
 
 <script>
 import axios from "axios";
+import FlashcardTable from "@/components/FlashcardTable.vue";
 export default {
   name: "FlashcardFilter",
+  components: { FlashcardTable },
   props: ["id", "setname"],
   data() {
     return {
-      flashcards: null,
+      showing: false,
+      flashcards: "",
       url: "flashcard-list/",
-      min_date: "2021-02-22",
-      max_date: "2021-02-22",
+      min_date: "",
+      max_date: "",
     };
   },
-  mounted() {
-    this.filter_flashcards();
-  },
+  mounted() {},
   methods: {
-    filter_flashcards() {
+    // show() {
+    //   this.showing = true;
+    //   this.loadFlashcards();
+    // },
+    loadFlashcards() {
+      this.showing = true;
       if (this.min_date) {
         this.query += "&min_date=" + this.min_date;
       }

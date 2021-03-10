@@ -71,28 +71,7 @@
       </div>
     </div>
     <div v-if="flashcards.length" class="container">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Front</th>
-            <th>Back</th>
-            <th>Added</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="flashcard in flashcards"
-            :key="flashcard.id"
-            @click="goToDetail(flashcard.id)"
-          >
-            <td>{{ flashcard.front }}</td>
-            <td>{{ flashcard.back }}</td>
-            <td>
-              <small>{{ flashcard.added }}</small>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <FlashcardTable :flashcards="flashcards" />
     </div>
     <div v-else class="text-center">
       <h3>Begin adding your flashcards!</h3>
@@ -180,11 +159,13 @@
 <script>
 import axios from "axios";
 import SearchBar from "@/components/SearchBar.vue";
+import FlashcardTable from "@/components/FlashcardTable.vue";
 import FlashcardListRenameSet from "./FlashcardListRenameSet.vue";
 export default {
   name: "FlashcardList",
   components: {
     SearchBar,
+    FlashcardTable,
     FlashcardListRenameSet,
   },
   props: ["id"],
@@ -286,15 +267,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-th {
-  color: #000000;
-  font-size: 1.1em;
-}
-td {
-  color: #2b2a2a;
-  cursor: pointer;
-  font-size: 1.1em;
-}
 #set_filter {
   float: right;
   background: #dddddd;
