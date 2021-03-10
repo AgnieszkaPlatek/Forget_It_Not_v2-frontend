@@ -7,9 +7,9 @@
       <div class="mt-4 mb-3 text-center">
         <router-link
           :to="{
-            name: 'LearnSession',
+            name: 'LearnIntro',
             params: {
-              cards: JSON.stringify(flashcards),
+              all: true,
             },
           }"
           class="btn btn-learn btn-lg btn-block content-center text-uppercase py-2 mx-auto"
@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       total_flashcards: 0,
+      username: "",
       sets: [],
     };
   },
@@ -113,21 +114,19 @@ export default {
       })
       .then(
         (response) => (
-          (this.sets = response.data),
-          (this.username = response.data[0]["owner_name"]),
-          (this.num_sets = response.data.length)
+          (this.sets = response.data), (this.num_sets = response.data.length)
         )
       );
     axios
-      .get("flashcards/", {
+      .get("auth/users/me/", {
         headers: {
           Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
       })
       .then(
         (response) => (
-          (this.flashcards = response.data),
-          (this.total_flashcards = response.data.length)
+          (this.total_flashcards = response.data["num_flashcards"]),
+          (this.username = response.data["username"])
         )
       );
   },

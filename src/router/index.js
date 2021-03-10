@@ -9,6 +9,7 @@ import FlashcardList from '../views/flashcards/FlashcardList.vue'
 import FlashcardFilter from '../views/flashcards/FlashcardFilter.vue'
 import LearnList from '../views/learn/LearnList.vue'
 import LearnSession from '../views/learn/LearnSession.vue'
+import LearnIntro from '../views/learn/LearnIntro.vue'
 import UserRegister from '../views/users/UserRegister.vue'
 import UserLogin from '../views/users/UserLogin.vue'
 import UserLogout from '../views/users/UserLogout.vue'
@@ -88,6 +89,12 @@ const routes = [
         path: '/learn',
         name: 'LearnSession',
         component: LearnSession,
+        props: true
+    },
+    {
+        path: '/learn-intro',
+        name: 'LearnIntro',
+        component: LearnIntro,
         props: true
     },
     // {
