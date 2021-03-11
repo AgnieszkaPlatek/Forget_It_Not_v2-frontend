@@ -55,9 +55,6 @@
               params: {
                 setname: setname,
                 set_id: id,
-                part: '',
-                all: '',
-                cards: '',
               },
             }"
             class="dropdown-item text-center text-uppercase py-1"

@@ -40,7 +40,6 @@
             part: true,
             cards: cards,
             set_id: id,
-            all: '',
           },
         }"
         class="btn btn-learn btn-block btn-lg btn-primary mb-4"
