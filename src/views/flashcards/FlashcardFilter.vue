@@ -3,59 +3,57 @@
     <h1 class="h3 mt-4 mb-5 ml-3 text-center">
       Filter flashcards from <b>{{ setname }}</b>
     </h1>
-    <p>{{ min_date }}</p>
-    <p>{{ max_date }}</p>
-    <div class="filter fluid-container mb-4">
-      <form @submit="loadFlashcards">
+    <div class="mb-4">
+      <form @submit.prevent="loadFlashcards">
         <div class="row col-12 mb-md-2">
-          <label for="min_date" class="h6 col-lg-2 text-left pt-2"
-            >from date:</label
+          <label for="min_date" class="h6 col-lg-3 text-right pt-2"
+            >FROM DATE:</label
           >
           <input
             type="date"
-            id="min_date"
             v-model="min_date"
             placeholder="dd/mm/yyyy"
-            class="ml-2 col-5 col-md-4"
+            class="ml-2 col-5 col-md-7"
           />
         </div>
         <div class="row col-12">
-          <label for="max_date" class="h6 col-lg-2 text-left pt-2"
-            >to date:</label
+          <label for="max_date" class="h6 col-lg-3 text-right pt-2"
+            >TO DATE:</label
           >
           <input
             type="date"
-            id="max_date"
             v-model="max_date"
             placeholder="dd/mm/yyyy"
-            class="ml-2 col-5 col-md-4"
+            class="ml-2 col-5 col-md-7"
           />
           <button type="submit"><i class="fa fa-search"></i></button>
         </div>
       </form>
     </div>
-    <div v-if="showing">
+    <div v-if="table">
       <FlashcardTable :flashcards="flashcards" />
+      <router-link
+        :to="{
+          name: 'LearnIntro',
+          params: {
+            setname: set_name,
+            part: true,
+            cards: cards,
+            set_id: id,
+            all: '',
+          },
+        }"
+        class="btn btn-learn btn-block btn-lg btn-primary mb-4"
+        >LEARN
+      </router-link>
     </div>
-    <router-link
-      v-if="showing"
-      :to="{
-        name: 'LearnIntro',
-        params: {
-          setname: set_name,
-          part: true,
-          cards: JSON.stringify(flashcards),
-          set_id: id,
-          all: '',
-        },
-      }"
-      class="btn btn-learn btn-block btn-lg btn-primary mb-4"
-      >LEARN
-    </router-link>
-    <div class="text-right">
+    <div v-if="message" class="ml-5 mt-5">
+      <h4>{{ message }}</h4>
+    </div>
+    <div class="text-right mr-5">
       <router-link
         :to="{ name: 'FlashcardList', params: { id: id } }"
-        class="btn btn-back btn-sm px-5 mx-3 mt-3"
+        class="btn btn-back btn-sm px-5 mx-3 mt-4"
         >Back</router-link
       >
     </div>
@@ -71,25 +69,22 @@ export default {
   props: ["id", "setname"],
   data() {
     return {
-      showing: false,
+      table: false,
       flashcards: "",
       url: "flashcard-list/",
       min_date: "",
       max_date: "",
+      cards: "",
+      message: "",
     };
   },
   mounted() {},
   methods: {
-    // show() {
-    //   this.showing = true;
-    //   this.loadFlashcards();
-    // },
     loadFlashcards() {
-      this.showing = true;
+      console.log("Started loading");
       if (this.min_date) {
         this.query += "&min_date=" + this.min_date;
       }
-      console.log(this.query);
       if (this.max_date) {
         this.query += "&max_date=" + this.max_date;
       }
@@ -104,7 +99,6 @@ export default {
           (this.next_page = response.data["next_page"]),
           (this.previous_page = response.data["previous_page"]),
           (this.set_name = response.data["results"][0]["set_name"]),
-          // (this.username = response.data["results"][0]["owner_name"]),
           (this.pages = response.data["pages"]),
           (this.current_page = response.data["current_page"]),
           (this.next_link = response.data["links"]["next"]),
@@ -113,13 +107,27 @@ export default {
             console.log(error)
           )
         );
+      if (this.flashcards.length > 0) {
+        this.table = true;
+        this.message = "";
+        this.cards = JSON.stringify(this.flashcards);
+      }
+      // } else {
+      //   this.message = "No flashcards found. Try again!";
+      // }
     },
   },
 };
 </script>
 
 <style scoped>
-.filter button {
+form {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  border-radius: 15px;
+}
+button {
   padding: 6px 12px;
   background: #8fcafa;
   font-size: 17px;
@@ -128,14 +136,19 @@ export default {
   text-align: right;
 }
 
-.filter button:hover {
+button:hover {
   background: #5db2f8;
 }
 
-.filter input[type="date"] {
+input {
   padding: 6px;
   font-size: 17px;
   border: none;
-  background: #d3e7fa;
+  background: #daeaf8;
+}
+label {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #646464;
 }
 </style>

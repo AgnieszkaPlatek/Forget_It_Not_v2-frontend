@@ -10,10 +10,6 @@
             name: 'LearnIntro',
             params: {
               all: true,
-              part: '',
-              setname: '',
-              set_id: '',
-              cards: '',
             },
           }"
           class="btn btn-learn btn-lg btn-block content-center text-uppercase py-2 mx-auto"
@@ -51,9 +47,6 @@
                   params: {
                     setname: set.name,
                     set_id: set.id,
-                    part: '',
-                    all: '',
-                    cards: '',
                   },
                 }"
                 class="dropdown-item text-center py-1"
@@ -81,9 +74,6 @@
               params: {
                 setname: set.name,
                 set_id: set.id,
-                part: '',
-                all: '',
-                cards: '',
               },
             }"
             class="btn btn-grey btn-lg btn-block mb-1"

@@ -51,10 +51,13 @@
         <div class="dropdown-menu">
           <router-link
             :to="{
-              name: 'LearnSession',
+              name: 'LearnIntro',
               params: {
                 setname: setname,
-                cards: JSON.stringify(flashcards),
+                set_id: id,
+                part: '',
+                all: '',
+                cards: '',
               },
             }"
             class="dropdown-item text-center text-uppercase py-1"
