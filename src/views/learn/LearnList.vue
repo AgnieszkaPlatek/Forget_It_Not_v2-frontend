@@ -17,15 +17,6 @@
           Learn all flashcards
           <span class="badge badge-light ml-2">{{ total_flashcards }}</span>
         </router-link>
-        <!-- <router-link
-          :to="{
-            name: 'LearnAll',
-          }"
-          class="btn btn-learn btn-lg btn-block content-center text-uppercase py-2 mx-auto"
-        >
-          Learn all flashcards
-          <span class="badge badge-light ml-2">{{ total_flashcards }}</span>
-        </router-link> -->
       </div>
       <div class="fluid-container">
         <div v-for="set in big_sets" :key="set.id">
