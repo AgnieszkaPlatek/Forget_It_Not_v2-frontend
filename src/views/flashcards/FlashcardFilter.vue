@@ -5,26 +5,26 @@
     </h1>
     <div class="mb-4">
       <form @submit.prevent="loadFlashcards">
-        <div class="row col-12 mb-md-2">
-          <label for="min_date" class="h6 col-lg-3 text-right pt-2"
+        <div class="row col-12 mb-2">
+          <label for="min_date" class="h6 col-3 text-right pt-2"
             >FROM DATE:</label
           >
           <input
             type="date"
             v-model="min_date"
             placeholder="dd/mm/yyyy"
-            class="ml-2 col-5 col-md-7"
+            class="col-7"
           />
         </div>
         <div class="row col-12">
-          <label for="max_date" class="h6 col-lg-3 text-right pt-2"
+          <label for="max_date" class="h6 col-3 text-right pt-2"
             >TO DATE:</label
           >
           <input
             type="date"
             v-model="max_date"
             placeholder="dd/mm/yyyy"
-            class="ml-2 col-5 col-md-7"
+            class="col-7"
           />
           <button type="submit"><i class="fa fa-search"></i></button>
         </div>
@@ -121,7 +121,7 @@ export default {
 
 <style scoped>
 form {
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
   background: white;
   border-radius: 15px;

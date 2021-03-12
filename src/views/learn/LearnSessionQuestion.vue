@@ -5,7 +5,7 @@
     <button
       @click="$emit('give_answer')"
       @keyup.enter="$emit('give_answer')"
-      class="btn btn-check btn-lg my-5"
+      class="btn btn-check btn-lg my-5 px-5"
     >
       Check if you know
     </button>

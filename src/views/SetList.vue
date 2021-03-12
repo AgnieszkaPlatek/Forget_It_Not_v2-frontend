@@ -1,5 +1,5 @@
 <template>
-  <section class="mt-4">
+  <section class="mt-4 mx-md-5">
     <div class="mb-5 text-center">
       <h1 class="h3">Flashcard Sets</h1>
       <h6>by {{ username }}</h6>

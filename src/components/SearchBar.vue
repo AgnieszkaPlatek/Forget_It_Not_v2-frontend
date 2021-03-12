@@ -56,16 +56,20 @@ export default {
 
 #search {
   width: 200px;
-  transition: width 0.5s ease;
+  transition: width 0.6s ease;
 }
 #search:focus {
-  width: 400px;
+  width: 350px;
   max-width: 80%;
 }
 @media (max-width: 1100px) {
+  #search {
+    margin-bottom: 10px;
+  }
   #search:focus {
     width: 400px;
     max-width: 87%;
+    margin-bottom: 10px;
   }
 }
 </style>
