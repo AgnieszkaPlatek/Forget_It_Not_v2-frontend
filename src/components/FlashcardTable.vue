@@ -27,6 +27,14 @@
 export default {
   name: "FlashcardTable",
   props: ["flashcards"],
+  methods: {
+    goToDetail(id) {
+      this.$router.push({
+        name: "FlashcardDetail",
+        params: { id: id },
+      });
+    },
+  },
 };
 </script>
 

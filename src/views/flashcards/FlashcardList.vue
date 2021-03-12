@@ -231,12 +231,6 @@ export default {
     toggleRename() {
       this.renaming = !this.renaming;
     },
-    goToDetail(id) {
-      this.$router.push({
-        name: "FlashcardDetail",
-        params: { id: id },
-      });
-    },
     goToFilter(id) {
       this.$router.push({
         name: "FlashcardFilter",
