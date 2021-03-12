@@ -12,16 +12,12 @@
         <p class="text-muted">created on {{ created }}</p>
       </div>
     </div>
-    <div v-if="num_flashcards > 10" class="fluid-container mb-5">
-      <div class="align-center">
+    <div v-if="num_flashcards > 10" class="mb-5 text-top">
+      <div class="align-center my-2">
         <SearchBar />
       </div>
-      <div class="text-center">
-        <button
-          @click="goToFilter(id)"
-          id="set_filter"
-          class="btn px-5 my-2 my-lg-0"
-        >
+      <div class="">
+        <button @click="goToFilter(id)" id="set_filter" class="btn">
           Filter flashcards by date
         </button>
       </div>
@@ -70,49 +66,40 @@
         </div>
       </div>
     </div>
-    <div v-if="flashcards.length" class="container">
+    <div v-if="flashcards.length" class="container mb-5">
       <FlashcardTable :flashcards="flashcards" />
     </div>
     <div v-else class="text-center">
       <h3>Begin adding your flashcards!</h3>
     </div>
-    <div v-if="next_page || previous_page" class="btn-group row ml-5">
-      <div v-if="previous_page">
-        <router-link
-          :to="{ name: 'FlashcardList', params: { id: this.id } }"
-          class="btn btn-outline-primary btn-sm mr-2"
-          >First</router-link
-        >
-        <router-link
-          :to="{ name: 'FlashcardList', params: { id: this.id } }"
-          class="btn btn-outline-primary btn-sm mr-2"
-        >
-          Previous</router-link
-        >
-      </div>
-      <div v-for="page in pages" :key="page" class="btn-group">
-        <button
-          type="button"
-          @click="goToPage(page)"
-          class="btn btn-outline-primary btn-sm mr-2"
-        >
+    <div
+      v-if="next_page || previous_page"
+      class="pagination justify-content-center"
+    >
+      <ul v-if="previous_page" class="page-item row">
+        <li @click="goToPage(1)" class="page-link mr-1">First</li>
+        <li @click="goToPage(previous_page)" class="page-link mr-1">
+          Previous
+        </li>
+      </ul>
+      <ul
+        v-for="page in pagesToShow"
+        :key="page"
+        class="page-item"
+        :class="{ active: isActive(page) }"
+      >
+        <li @click="goToPage(page)" class="page-link mr-1">
           {{ page }}
-        </button>
-      </div>
+        </li>
+      </ul>
 
-      <div v-if="next_page">
-        <router-link to="" class="btn btn-outline-primary btn-sm mr-2"
-          >Next</router-link
-        >
-        <router-link
-          :to="{ name: 'FlashcardList', params: { id: id } }"
-          class="btn btn-outline-primary btn-sm"
-        >
-          Last</router-link
-        >
-      </div>
+      <ul v-if="next_page" class="page-item row">
+        <li @click="goToPage(next_page)" class="page-link mr-1">Next</li>
+        <li @click="goToPage(pages.length)" class="page-link">Last</li>
+      </ul>
     </div>
     <p class="mt-3">You are on page {{ current_page }}</p>
+    <p>{{ pagesToShow }}</p>
     <div class="fluid-container mt-5">
       <div class="mb-3 text-center">
         <router-link
@@ -123,11 +110,11 @@
       </div>
     </div>
     <div class="text-center">
-      <div class="btn-group">
+      <div class="btn-group-justified">
         <button
           v-if="!renaming"
           @click="toggleRename"
-          class="btn btn-update btn-sm px-5"
+          class="btn btn-update btn-sm px-5 mb-2"
         >
           Rename Set
         </button>
@@ -136,12 +123,12 @@
             name: 'SetDelete',
             params: { id: id, setname: setname },
           }"
-          class="btn btn-delete btn-sm ml-2 px-5"
+          class="btn btn-delete btn-sm ml-2 px-5 mb-2"
           >Delete Set</router-link
         >
         <router-link
           :to="{ name: 'SetList', params: { id: id } }"
-          class="btn btn-back btn-sm ml-2 px-5"
+          class="btn btn-back btn-sm ml-2 px-5 mb-2"
           role="button"
           >Back</router-link
         >
@@ -192,13 +179,10 @@ export default {
   mounted() {
     console.log("Mounted");
     this.loadFlashcards(this.url + this.id);
-    if (this.num_flashcards === 0) {
-      this.loadEmpty("flashcard-sets/" + this.id);
-    }
   },
   methods: {
     loadEmpty(url) {
-      console.log("Loading flashcards");
+      console.log("Loading empty");
       axios
         .get(url, {
           headers: {
@@ -240,6 +224,9 @@ export default {
             console.log(error)
           )
         );
+      if (this.num_flashcards == 0) {
+        this.loadEmpty();
+      }
     },
     toggleRename() {
       this.renaming = !this.renaming;
@@ -257,15 +244,25 @@ export default {
       });
     },
     goToPage(page) {
-      this.current_page = page;
-      let url = this.url + "/?page=" + page;
-      this.loadFlashcards(url);
+      this.loadFlashcards(this.url + this.id + "/" + "?page=" + page);
+    },
+    isActive(page) {
+      return page == this.current_page;
+    },
+    // toShow(page) {
+    //   return page <= (this.current_page + 1) || page >= (this.current_page - 1)
+    // }
+  },
+  computed: {
+    pagesToShow() {
+      return this.pages.filter(
+        (page) => page < this.current_page + 3 && page > this.current_page - 3
+      );
     },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #set_filter {
   float: right;
@@ -276,6 +273,7 @@ export default {
   color: #000000;
   letter-spacing: 1px;
   word-spacing: 4px;
+  padding: 10px 40px 10px 40px;
 }
 
 #set_filter:hover {
@@ -286,20 +284,13 @@ export default {
   #set_filter {
     display: block;
     width: 100%;
+    margin-bottom: 10px;
   }
 }
-#search {
-  width: 200px;
-  transition: width 0.5s ease;
+ul {
+  padding-inline-start: 0px;
 }
-#search:focus {
-  width: 400px;
-  max-width: 80%;
-}
-@media (max-width: 1100px) {
-  #search:focus {
-    width: 400px;
-    max-width: 87%;
-  }
+.page-link {
+  margin-left: 0px;
 }
 </style>
