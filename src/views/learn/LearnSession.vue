@@ -8,12 +8,12 @@
         Learning flashcards from set <strong>{{ setname }}</strong>
       </h1>
     </div>
-    <div v-if="setname && part && !finished" class="ml-2 mb-4 mt-4 text-center">
+    <div v-if="part && !finished" class="ml-2 mb-4 mt-4 text-center">
       <h1 class="h2">
         Learning part of set <strong>{{ setname }}</strong>
       </h1>
     </div>
-    <div v-else-if="!setname && !finished" class="ml-2 mb-4 mt-4 text-center">
+    <div v-else-if="all && !finished" class="ml-2 mb-4 mt-4 text-center">
       <h2>Learning all flashcards</h2>
     </div>
     <div
