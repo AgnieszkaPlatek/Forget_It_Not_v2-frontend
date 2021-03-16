@@ -14,7 +14,7 @@
     </div>
     <div v-if="num_flashcards > 10" class="mb-5 text-top">
       <div class="align-center my-2">
-        <SearchBar />
+        <SearchBar :id="id" />
       </div>
       <div class="">
         <button @click="goToFilter(id)" id="set_filter" class="btn">
@@ -98,8 +98,6 @@
         <li @click="goToPage(pages.length)" class="page-link">Last</li>
       </ul>
     </div>
-    <p class="mt-3">You are on page {{ current_page }}</p>
-    <p>{{ pagesToShow }}</p>
     <div class="fluid-container mt-5">
       <div class="mb-3 text-center">
         <router-link
@@ -283,8 +281,5 @@ export default {
 }
 ul {
   padding-inline-start: 0px;
-}
-.page-link {
-  margin-left: 0px;
 }
 </style>

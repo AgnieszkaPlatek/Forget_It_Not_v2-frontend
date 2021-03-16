@@ -19,19 +19,6 @@
         luck!
       </h5>
     </div>
-    <!-- <div v-if="setname && !part" class="mb-4 pt-2 text-center">
-      <h1 class="h2">
-        Learn set <strong>{{ setname }}</strong>
-      </h1>
-    </div>
-    <div v-else-if="part" class="mb-4 pt-2 text-center">
-      <h1 class="h2">
-        Learn part of set <strong>{{ setname }}</strong>
-      </h1>
-    </div>
-    <div v-else-if="all" class="mb-4 pt-2 text-center">
-      <h1 class="h2">Learning all flashcards</h1>
-    </div> -->
     <div v-if="setname && !part" class="mb-3 text-center">
       <router-link
         :to="{

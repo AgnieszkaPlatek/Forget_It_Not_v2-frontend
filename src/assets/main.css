@@ -179,3 +179,8 @@ table a {
     margin-bottom: 20px;
     border-radius: 10px;
   }
+
+  .page-link {
+    margin-left: 0px;
+    cursor: pointer;
+  }
