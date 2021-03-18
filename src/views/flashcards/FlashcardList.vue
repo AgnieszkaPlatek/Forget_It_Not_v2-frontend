@@ -12,24 +12,30 @@
         <p class="text-muted">created on {{ created }}</p>
       </div>
     </div>
-    <div v-if="num_flashcards > 10" class="mb-5 text-top">
-      <div class="align-center my-2">
-        <SearchBar :id="id" />
+    <div
+      v-if="num_flashcards > 10"
+      class="mb-4 text-top col-lg-12 fluid-container row"
+    >
+      <div class="col-lg-6 my-2">
+        <SearchBar @search="searchFlashcard" />
       </div>
-      <div class="">
-        <button @click="goToFilter(id)" id="set_filter" class="btn">
+      <div class="col-lg-6">
+        <button @click="goToFilter(id)" id="set_filter" class="btn btn-block">
           Filter flashcards by date
         </button>
       </div>
     </div>
-    <br />
+    <div v-if="search_results.length" class="fluid-container mb-5">
+      <FlashcardTable :flashcards="search_results" />
+      <br />
+    </div>
     <router-link
       v-if="num_flashcards > 0 && num_flashcards <= 20"
       :to="{
-        name: 'LearnSession',
+        name: 'LearnIntro',
         params: {
           setname: setname,
-          cards: JSON.stringify(flashcards),
+          set_id: id,
         },
       }"
       class="btn btn-learn btn-block btn-lg btn-primary mb-5"
@@ -108,7 +114,7 @@
       </div>
     </div>
     <div class="text-center">
-      <div class="btn-group-justified">
+      <div class="btn-group">
         <button
           v-if="!renaming"
           @click="toggleRename"
@@ -121,12 +127,12 @@
             name: 'SetDelete',
             params: { id: id, setname: setname },
           }"
-          class="btn btn-delete btn-sm ml-2 px-5 mb-2"
+          class="btn btn-delete btn-sm ml-1 px-5 mb-2"
           >Delete Set</router-link
         >
         <router-link
           :to="{ name: 'SetList', params: { id: id } }"
-          class="btn btn-back btn-sm ml-2 px-5 mb-2"
+          class="btn btn-back btn-sm ml-1 px-5 mb-2"
           role="button"
           >Back</router-link
         >
@@ -172,6 +178,7 @@ export default {
       page_url: "",
       set_name: "",
       renaming: false,
+      search_results: "",
     };
   },
   mounted() {
@@ -226,6 +233,17 @@ export default {
         this.loadEmpty();
       }
     },
+    searchFlashcard(query) {
+      console.log("Searching for flashcard");
+      console.log(query);
+      axios
+        .get("search/" + this.id + "?search=" + query, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
+        .then((response) => (this.search_results = response.data));
+    },
     toggleRename() {
       this.renaming = !this.renaming;
     },
@@ -257,7 +275,6 @@ export default {
 
 <style scoped>
 #set_filter {
-  float: right;
   background: #dddddd;
   font-size: 18px;
   border: none;
@@ -265,7 +282,9 @@ export default {
   color: #000000;
   letter-spacing: 1px;
   word-spacing: 4px;
-  padding: 10px 40px 10px 40px;
+  display: block;
+  width: 100%;
+  margin-top: 5px;
 }
 
 #set_filter:hover {
@@ -274,9 +293,8 @@ export default {
 
 @media (max-width: 1100px) {
   #set_filter {
-    display: block;
     width: 100%;
-    margin-bottom: 10px;
+    margin-top: 0px;
   }
 }
 ul {
