@@ -134,7 +134,6 @@ export default {
 .btn-grey {
   background: #eeeeee;
   color: #000000;
-  max-width: 700px;
   margin: auto;
 }
 
