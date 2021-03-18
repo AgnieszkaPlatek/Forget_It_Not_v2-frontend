@@ -4,6 +4,7 @@
       <tr>
         <th>Front</th>
         <th>Back</th>
+        <th v-if="all">Set</th>
         <th>Added</th>
       </tr>
     </thead>
@@ -11,10 +12,13 @@
       <tr
         v-for="flashcard in flashcards"
         :key="flashcard.id"
-        @click="goToDetail(flashcard.id)"
+        @click="goToDetail(flashcard.flashcard_set, flashcard.id)"
       >
         <td>{{ flashcard.front }}</td>
         <td>{{ flashcard.back }}</td>
+        <td v-if="all">
+          <b>{{ flashcard.set_name }}</b>
+        </td>
         <td>
           <small>{{ flashcard.added }}</small>
         </td>
@@ -26,12 +30,16 @@
 <script>
 export default {
   name: "FlashcardTable",
-  props: ["flashcards"],
+  props: ["flashcards", "all"],
   methods: {
-    goToDetail(id) {
+    goToDetail(set_id, f_id) {
       this.$router.push({
         name: "FlashcardDetail",
-        params: { id: id },
+        params: {
+          id: set_id,
+          f_id: f_id,
+          cards: JSON.stringify(this.flashcards),
+        },
       });
     },
   },

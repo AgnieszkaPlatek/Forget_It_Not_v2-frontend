@@ -20,10 +20,11 @@
     </div>
     <div class="row col-12 mt-5">
       <div class="offset-lg-3"></div>
-      <SearchBar class="col-lg-6" />
+      <SearchBar @search="searchFlashcard" class="col-lg-6" />
+      <p>{{ checked_query }}</p>
     </div>
-    <div v-if="search_results">
-      <FlashcardTable :flashcards="flashcards" />
+    <div v-if="flashcards.length">
+      <FlashcardTable :flashcards="flashcards" :all="true" />
     </div>
   </section>
   <br />
@@ -36,31 +37,28 @@ import SearchBar from "@/components/SearchBar.vue";
 export default {
   name: "AppHome",
   components: { SearchBar, FlashcardTable },
-  props: [],
+  props: ["checked_query"],
   data() {
     return {
       username: "",
       num_sets: 0,
       num_flashcards: 0,
-      search_results: "",
-      query: "",
+      flashcards: "",
+      table: false,
     };
   },
   methods: {
-    searchFlashcvard() {
+    searchFlashcard(query) {
+      console.log("Searching for flashcard");
+      console.log(query);
       axios
-        .get("flashcards/", {
+        .get("flashcards/?search=" + query, {
           headers: {
             Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
           },
         })
-        .then(
-          (response) => (
-            (this.flashcards = response.data),
-            (this.num_flashcards = response.data.length)
-          )
-        );
-      console.log("All flashcards loaded");
+        .then((response) => (this.flashcards = response.data));
+      this.table = true;
     },
   },
   mounted() {
