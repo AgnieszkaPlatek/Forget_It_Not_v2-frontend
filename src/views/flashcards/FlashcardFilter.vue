@@ -33,8 +33,8 @@
       </form>
     </div>
     <div v-if="table">
-      <div class="ml-5 mt-5 mb-3">
-        <h5>Selected {{ total }} flashcards!</h5>
+      <div class="text-center mt-5 mb-3">
+        <h4>Selected {{ total }} flashcards!</h4>
       </div>
       <router-link
         :to="{
@@ -139,10 +139,7 @@ export default {
         this.query;
       this.loadFlashcards(this.url);
       this.getAllCards(
-        "http://localhost:8000/api/flashcard-learning-list/" +
-          this.id +
-          "/?" +
-          this.query
+        "http://localhost:8000/api/learn/" + this.id + "/?" + this.query
       );
     },
     getAllCards(url) {
