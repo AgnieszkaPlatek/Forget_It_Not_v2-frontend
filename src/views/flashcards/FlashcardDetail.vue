@@ -77,6 +77,7 @@
         </div>
       </div>
     </div>
+    <p>{{ index }}</p>
   </section>
 </template>
 
@@ -99,6 +100,7 @@ export default {
       next_index: null,
       previous_index: null,
       cardtext: "",
+      showbackfirst: true,
       index: "",
     };
   },
@@ -114,7 +116,12 @@ export default {
   methods: {
     loadFlashcard(index) {
       this.flashcard = this.flashcards[index];
-      this.cardtext = this.flashcard.back;
+      this.index = index;
+      if (this.showbackfirst == true) {
+        this.cardtext = this.flashcard.back;
+      } else {
+        this.cardtext = this.flashcard.front;
+      }
       if (index < this.flashcards.length - 1) {
         this.next_index = index + 1;
       } else {
@@ -125,13 +132,16 @@ export default {
       } else {
         this.previous_index = null;
       }
+      console.log(this.index);
     },
     changeText() {
       if (this.cardtext == this.flashcard.back) {
         this.cardtext = this.flashcard.front;
+        this.showbackfirst = false;
         console.log("cardtext: ", this.flashcard.front);
       } else {
         this.cardtext = this.flashcard.back;
+        this.showbackfirst = true;
         console.log("cardtext: ", this.flashcard.back);
       }
     },

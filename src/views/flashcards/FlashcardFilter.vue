@@ -26,13 +26,13 @@
             placeholder="dd/mm/yyyy"
             class="col-7"
           />
-          <button type="submit" :disabled="submitted">
+          <button id="glass" type="submit" :disabled="submitted">
             <i class="fa fa-search"></i>
           </button>
         </div>
       </form>
     </div>
-    <div v-if="table">
+    <div v-if="flashcards.length">
       <div class="text-center mt-5 mb-3">
         <h4>Selected {{ total }} flashcards!</h4>
       </div>
@@ -50,34 +50,43 @@
         >LEARN
       </router-link>
       <FlashcardTable :flashcards="flashcards" />
-      <div
-        v-if="next_page || previous_page"
-        class="pagination justify-content-center mb-4"
-      >
-        <ul v-if="previous_page" class="page-item row">
-          <li @click="goToPage(1)" class="page-link mr-1">First</li>
-          <li @click="goToPage(previous_page)" class="page-link mr-1">
-            Previous
-          </li>
-        </ul>
-        <ul
+    </div>
+    <div v-if="next_page || previous_page" class="mt-5">
+      <ul class="page-item pagination justify-content-center">
+        <li v-if="previous_page" @click="goToPage(1)" class="page-link mr-1">
+          First
+        </li>
+        <li
+          v-if="previous_page"
+          @click="goToPage(previous_page)"
+          class="page-link mr-1"
+        >
+          Previous
+        </li>
+        <li
           v-for="page in pagesToShow"
           :key="page"
-          class="page-item"
+          @click="goToPage(page)"
           :class="{ active: isActive(page) }"
+          class="page-item mr-1"
         >
-          <li @click="goToPage(page)" class="page-link mr-1">
+          <button class="page-link">
             {{ page }}
-          </li>
-        </ul>
-
-        <ul v-if="next_page" class="page-item row">
-          <li @click="goToPage(next_page)" class="page-link mr-1">Next</li>
-          <li @click="goToPage(pages.length)" class="page-link">Last</li>
-        </ul>
-      </div>
+          </button>
+        </li>
+        <li
+          v-if="next_page"
+          @click="goToPage(next_page)"
+          class="page-link mr-1"
+        >
+          Next
+        </li>
+        <li v-if="next_page" @click="goToPage(pages.length)" class="page-link">
+          Last
+        </li>
+      </ul>
     </div>
-    <div v-if="message" class="ml-5 mt-5">
+    <div v-if="message" class="ml-5 mt-5 text-center">
       <h4>{{ message }}</h4>
     </div>
     <div class="text-right mr-5">
@@ -112,7 +121,6 @@ export default {
       query: "",
       url: "",
       submitted: false,
-      total: "",
     };
   },
   mounted() {},
@@ -126,24 +134,25 @@ export default {
     },
     filterFlashcards() {
       console.log("Started filtering");
+      if (!this.min_date && !this.max_date) {
+        this.message = "No flashcards found. Try again!";
+        this.$router.forceUpdate();
+      }
       if (this.min_date && !this.query.includes("min_date")) {
         this.query += "&min_date=" + this.min_date;
       }
       if (this.max_date && !this.query.includes("max_date")) {
         this.query += "&max_date=" + this.max_date;
       }
-      this.url =
-        "http://localhost:8000/api/flashcard-list/" +
-        this.id +
-        "/?" +
-        this.query;
+      this.message = "";
+      this.url = "flashcard-list/" + this.id + "/?" + this.query;
       this.loadFlashcards(this.url);
       this.getAllCards(
         "http://localhost:8000/api/learn/" + this.id + "/?" + this.query
       );
     },
     getAllCards(url) {
-      console.log("Started getting flashcards");
+      console.log("Started getting flashcards from", url);
       axios
         .get(url, {
           headers: {
@@ -153,7 +162,7 @@ export default {
         .then((response) =>
           (this.cards = response.data).catch((error) => console.log(error))
         );
-      this.total = this.cards.length;
+      console.log("This cards are: ", this.cards);
     },
     loadFlashcards(url) {
       console.log("Started loading", url);
@@ -176,10 +185,9 @@ export default {
       if (this.flashcards.length > 0) {
         this.table = true;
         this.message = "";
+      } else {
+        this.message = "No flashcards found. Try again!";
       }
-      // } else {
-      //   this.message = "No flashcards found. Try again!";
-      // }
     },
   },
   computed: {
@@ -187,6 +195,9 @@ export default {
       return this.pages.filter(
         (page) => page < this.current_page + 3 && page > this.current_page - 3
       );
+    },
+    total() {
+      return this.cards.length;
     },
   },
 };
@@ -199,7 +210,7 @@ form {
   background: white;
   border-radius: 15px;
 }
-button {
+#glass {
   padding: 6px 12px;
   background: #8fcafa;
   font-size: 17px;
@@ -208,7 +219,7 @@ button {
   text-align: right;
 }
 
-button:hover {
+#glass:hover {
   background: #5db2f8;
 }
 

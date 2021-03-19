@@ -78,30 +78,39 @@
     <div v-else class="text-center">
       <h3>Begin adding your flashcards!</h3>
     </div>
-    <div
-      v-if="next_page || previous_page"
-      class="pagination justify-content-center"
-    >
-      <ul v-if="previous_page" class="page-item row">
-        <li @click="goToPage(1)" class="page-link mr-1">First</li>
-        <li @click="goToPage(previous_page)" class="page-link mr-1">
+    <div v-if="next_page || previous_page">
+      <ul class="page-item pagination justify-content-center">
+        <li v-if="previous_page" @click="goToPage(1)" class="page-link mr-1">
+          First
+        </li>
+        <li
+          v-if="previous_page"
+          @click="goToPage(previous_page)"
+          class="page-link mr-1"
+        >
           Previous
         </li>
-      </ul>
-      <ul
-        v-for="page in pagesToShow"
-        :key="page"
-        class="page-item"
-        :class="{ active: isActive(page) }"
-      >
-        <li @click="goToPage(page)" class="page-link mr-1">
-          {{ page }}
+        <li
+          v-for="page in pagesToShow"
+          :key="page"
+          @click="goToPage(page)"
+          :class="{ active: isActive(page) }"
+          class="page-item mr-1"
+        >
+          <button class="page-link">
+            {{ page }}
+          </button>
         </li>
-      </ul>
-
-      <ul v-if="next_page" class="page-item row">
-        <li @click="goToPage(next_page)" class="page-link mr-1">Next</li>
-        <li @click="goToPage(pages.length)" class="page-link">Last</li>
+        <li
+          v-if="next_page"
+          @click="goToPage(next_page)"
+          class="page-link mr-1"
+        >
+          Next
+        </li>
+        <li v-if="next_page" @click="goToPage(pages.length)" class="page-link">
+          Last
+        </li>
       </ul>
     </div>
     <div class="fluid-container mt-5">
@@ -257,11 +266,8 @@ export default {
       this.loadFlashcards(this.url + this.id + "/" + "?page=" + page);
     },
     isActive(page) {
-      return page == this.current_page;
+      return page === this.current_page;
     },
-    // toShow(page) {
-    //   return page <= (this.current_page + 1) || page >= (this.current_page - 1)
-    // }
   },
   computed: {
     pagesToShow() {
