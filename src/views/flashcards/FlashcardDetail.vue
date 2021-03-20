@@ -9,8 +9,8 @@
       <img class="mr-5" src="@/assets/arrow.png" alt="arrow" />
       <flashcard-card :cardtext="cardtext" />
     </div>
-    <div class="fluid container col-md-8 mt-4">
-      <div v-if="previous_index && next_index" class="row">
+    <div class="fluid container col-md-8 mt-5">
+      <div v-if="previous_index != null && next_index" class="row">
         <button
           @click="loadFlashcard(previous_index)"
           class="btn btn-previous col-6 offset-md-2 col-md-4 d-inline-block"
@@ -24,7 +24,7 @@
           Next
         </button>
       </div>
-      <div v-if="previous_index && !next_index" class="row">
+      <div v-if="previous_index != null && !next_index" class="row">
         <button
           @click="loadFlashcard(previous_index)"
           class="btn btn-previous offset-md-2 col-md-8 d-inline-block"
@@ -32,7 +32,7 @@
           Previous
         </button>
       </div>
-      <div v-if="!previous_index && next_index" class="row">
+      <div v-if="previous_index == null && next_index" class="row">
         <button
           @click="loadFlashcard(next_index)"
           class="btn btn-next offset-md-2 col-md-8 d-inline-block"
@@ -77,7 +77,6 @@
         </div>
       </div>
     </div>
-    <p>{{ index }}</p>
   </section>
 </template>
 
@@ -117,11 +116,13 @@ export default {
     loadFlashcard(index) {
       this.flashcard = this.flashcards[index];
       this.index = index;
+      // Letting the user to decide if he wants to see back or front of the flashcard first
       if (this.showbackfirst == true) {
         this.cardtext = this.flashcard.back;
       } else {
         this.cardtext = this.flashcard.front;
       }
+      // Calculating indexes of previous and next flashcard
       if (index < this.flashcards.length - 1) {
         this.next_index = index + 1;
       } else {
