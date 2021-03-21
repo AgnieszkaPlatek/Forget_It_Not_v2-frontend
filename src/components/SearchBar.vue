@@ -27,27 +27,11 @@ export default {
   methods: {
     check(query) {
       if (query && query.length > 2) {
-        // this.checked_query = query;
         this.$emit("search", query);
         console.log("Checking query");
         console.log(query);
       }
     },
-    // findInSet(query) {
-    //   console.log("Searching in set");
-    //   axios
-    //     .get("flashcard-sets/" + this.id + "/?search=" + query, {
-    //       headers: {
-    //         Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-    //       },
-    //     })
-    //     .then((response) =>
-    //       (this.result = JSON.stringify(
-    //         response.data["flashcards"]
-    //       )).catch((error) => console.log(error))
-    //     );
-    //   this.$emit("result", this);
-    // },
   },
 };
 </script>

@@ -97,12 +97,6 @@ const routes = [
         component: LearnIntro,
         props: true
     },
-    // {
-    //     path: '/learn/all',
-    //     name: 'LearnAll',
-    //     component: LearnSession,
-    //     props: true
-    // },
     {
         path: '/register',
         name: 'UserRegister',

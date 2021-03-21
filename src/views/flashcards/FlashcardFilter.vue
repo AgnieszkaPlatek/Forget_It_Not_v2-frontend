@@ -32,9 +32,10 @@
         </div>
       </form>
     </div>
-    <div v-if="flashcards.length">
+    <div v-if="total">
       <div class="text-center mt-5 mb-3">
-        <h4>Selected {{ total }} flashcards!</h4>
+        <h4 v-if="total === 1">Selected {{ total }} flashcard!</h4>
+        <h4 v-else>Selected {{ total }} flashcards!</h4>
       </div>
       <router-link
         :to="{
@@ -86,9 +87,9 @@
         </li>
       </ul>
     </div>
-    <div v-if="message" class="ml-5 mt-5 text-center">
+    <!-- <div v-if="message" class="ml-5 mt-5 text-center">
       <h4>{{ message }}</h4>
-    </div>
+    </div> -->
     <div class="text-right mr-5">
       <router-link
         :to="{ name: 'FlashcardList', params: { id: id } }"

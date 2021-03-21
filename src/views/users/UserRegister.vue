@@ -5,7 +5,7 @@
     <p>{{ email }}</p>
     <p>{{ password }}</p>
     <p>{{ re_password }}</p>
-    <form @submit="register">
+    <form @submit.prevent="register">
       <label>Username:</label>
       <input type="username" required v-model="username" />
       <label>Email:</label>

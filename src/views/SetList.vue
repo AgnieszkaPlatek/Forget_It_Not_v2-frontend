@@ -39,7 +39,7 @@
         </tbody>
       </table>
     </div>
-    <div v-else class="mb-5">
+    <div v-else class="mb-5 text-center">
       <h6>You have no sets yet. Click the button below to create one.</h6>
     </div>
     <div>
