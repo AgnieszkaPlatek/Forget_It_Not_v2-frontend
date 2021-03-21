@@ -12,13 +12,13 @@
     <div class="fluid container col-md-8 mt-5">
       <div v-if="previous_index != null && next_index" class="row">
         <button
-          @click="loadFlashcard(previous_index)"
+          @click="getFlashcard(previous_index)"
           class="btn btn-previous col-6 offset-md-2 col-md-4 d-inline-block"
         >
           Previous
         </button>
         <button
-          @click="loadFlashcard(next_index)"
+          @click="getFlashcard(next_index)"
           class="btn btn-next col-6 col-md-4 d-inline-block"
         >
           Next
@@ -26,7 +26,7 @@
       </div>
       <div v-if="previous_index != null && !next_index" class="row">
         <button
-          @click="loadFlashcard(previous_index)"
+          @click="getFlashcard(previous_index)"
           class="btn btn-previous offset-md-2 col-md-8 d-inline-block"
         >
           Previous
@@ -34,7 +34,7 @@
       </div>
       <div v-if="previous_index == null && next_index" class="row">
         <button
-          @click="loadFlashcard(next_index)"
+          @click="getFlashcard(next_index)"
           class="btn btn-next offset-md-2 col-md-8 d-inline-block"
           role="button"
           aria-pressed="true"
@@ -88,7 +88,7 @@ export default {
   components: {
     FlashcardCard,
   },
-  props: ["id", "f_id", "cards"],
+  props: ["id", "f_id", "cards", "one"],
   data() {
     return {
       setname: "",
@@ -104,16 +104,23 @@ export default {
     };
   },
   mounted() {
-    this.flashcards = JSON.parse(this.cards);
-    this.username = this.flashcards[0]["owner_name"];
-    this.setname = this.flashcards[0]["set_name"];
-    this.index = this.flashcards.findIndex(
-      (flashcard) => flashcard.id == this.f_id
-    );
-    this.loadFlashcard(this.index);
+    console.log(this.one);
+    if (this.one) {
+      console.log("one");
+      this.loadFlashcard();
+    } else {
+      console.log("all set");
+      this.flashcards = JSON.parse(this.cards);
+      this.username = this.flashcards[0]["owner_name"];
+      this.setname = this.flashcards[0]["set_name"];
+      this.index = this.flashcards.findIndex(
+        (flashcard) => flashcard.id == this.f_id
+      );
+      this.getFlashcard(this.index);
+    }
   },
   methods: {
-    loadFlashcard(index) {
+    getFlashcard(index) {
       this.flashcard = this.flashcards[index];
       this.index = index;
       // Letting the user to decide if he wants to see back or front of the flashcard first
@@ -159,6 +166,12 @@ export default {
       alert("Flashcard has been deleted!");
     },
     editFlashcard() {},
+    loadFlashcard() {
+      this.flashcard = JSON.parse(this.cards);
+      this.username = this.flashcard["owner_name"];
+      this.setname = this.flashcard["set_name"];
+      this.cardtext = this.flashcard.back;
+    },
   },
 };
 </script>

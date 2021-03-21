@@ -12,7 +12,8 @@
       <tr
         v-for="flashcard in flashcards"
         :key="flashcard.id"
-        @click="goToDetail(flashcard.flashcard_set, flashcard.id)"
+        data-dismiss="modal"
+        @click="goToDetail(flashcard)"
       >
         <td>{{ flashcard.front }}</td>
         <td>{{ flashcard.back }}</td>
@@ -31,14 +32,28 @@
 export default {
   name: "FlashcardTable",
   props: ["flashcards", "all"],
+  data() {
+    return {
+      cards: "",
+      one: "",
+    };
+  },
   methods: {
-    goToDetail(set_id, f_id) {
+    goToDetail(flashcard) {
+      if (!this.all) {
+        this.cards = JSON.stringify(this.flashcards);
+        this.one = "";
+      } else {
+        this.cards = JSON.stringify(flashcard);
+        this.one = true;
+      }
       this.$router.push({
         name: "FlashcardDetail",
         params: {
-          id: set_id,
-          f_id: f_id,
-          cards: JSON.stringify(this.flashcards),
+          id: flashcard.flashcard_set,
+          f_id: flashcard.id,
+          cards: this.cards,
+          one: this.one,
         },
       });
     },

@@ -1,5 +1,6 @@
 <template>
   <section class="mt-4">
+    <!-- <h1>{{ title }}</h1> -->
     <div class="text-center">
       <h1 class="h2 mb-3">
         Hello <b>{{ username }}</b
@@ -21,9 +22,9 @@
     <div class="row col-12 mt-5">
       <div class="offset-lg-3"></div>
       <SearchBar @search="searchFlashcard" class="col-lg-6" />
-      <p>{{ checked_query }}</p>
     </div>
     <div v-if="flashcards.length">
+      <br />
       <FlashcardTable :flashcards="flashcards" :all="true" />
     </div>
   </section>
@@ -45,6 +46,7 @@ export default {
       num_flashcards: 0,
       flashcards: "",
       table: false,
+      // title: this.$store.state.title,
     };
   },
   methods: {
@@ -77,7 +79,13 @@ export default {
         )
       )
       .catch((error) => console.log(error));
+    // console.log(this.$store.state.title);
   },
+  // computed: {
+  //   title() {
+  //     return this.$store.state.title;
+  //   },
+  // },
 };
 </script>
 
