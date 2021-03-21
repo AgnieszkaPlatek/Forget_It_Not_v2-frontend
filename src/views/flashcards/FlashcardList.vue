@@ -25,9 +25,16 @@
         </button>
       </div>
     </div>
-    <div v-if="search_results.length" class="fluid-container mb-5">
-      <FlashcardTable :flashcards="search_results" />
-      <br />
+    <div v-if="search_results.length" class="mb-5">
+      <div class="modal fade" id="searchModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-body">
+              <FlashcardTable :flashcards="search_results" class="mb-5" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <router-link
       v-if="num_flashcards > 0 && num_flashcards <= 20"

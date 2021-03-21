@@ -7,13 +7,8 @@
         placeholder="Search for flashcard"
         v-model="query"
       />
-      <button>
-        <i
-          type="submit"
-          class="fa fa-search"
-          data-toggle="modal"
-          data-target="#myModal"
-        ></i>
+      <button data-toggle="modal" data-target="#searchModal">
+        <i type="submit" class="fa fa-search"></i>
       </button>
     </form>
   </div>
