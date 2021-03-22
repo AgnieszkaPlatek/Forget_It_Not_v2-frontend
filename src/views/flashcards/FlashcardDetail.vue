@@ -24,7 +24,7 @@
           Next
         </button>
       </div>
-      <div v-if="previous_index != null && !next_index" class="row">
+      <div v-if="previous_index != null && !next_index" class="align-center">
         <button
           @click="getFlashcard(previous_index)"
           class="btn btn-previous offset-md-2 col-md-8 d-inline-block"
@@ -68,11 +68,6 @@
             :to="{ name: 'FlashcardList', params: { id: id } }"
             class="btn btn-delete btn-sm ml-1 px-5"
             >Delete</router-link
-          >
-          <router-link
-            :to="{ name: 'FlashcardList', params: { id: id } }"
-            class="btn btn-back btn-sm px-5 ml-1"
-            >Back</router-link
           >
         </div>
       </div>

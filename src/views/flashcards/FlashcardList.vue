@@ -146,12 +146,6 @@
           class="btn btn-delete btn-sm ml-1 px-5 mb-2"
           >Delete Set</router-link
         >
-        <router-link
-          :to="{ name: 'SetList', params: { id: id } }"
-          class="btn btn-back btn-sm ml-1 px-5 mb-2"
-          role="button"
-          >Back</router-link
-        >
       </div>
     </div>
     <div v-if="renaming">

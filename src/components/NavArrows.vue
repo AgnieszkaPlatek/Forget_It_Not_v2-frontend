@@ -1,8 +1,18 @@
 <template>
-  <!-- Here will be arrows back and forward -->
-  <!-- <button type="button" @click="back" class="btn btn-info">Back</button>
-  <button type="button"@click="forward" class="btn btn-info">Forward</button> -->
-  <p>Arrows</p>
+  <div>
+    <button id="left" type="button" @click="back" class="arrow btn btn-sm px-4">
+      &lt;
+    </button>
+    <button
+      id="right"
+      type="button"
+      @click="forward"
+      class="arrow btn btn-sm px-4"
+    >
+      &gt;
+    </button>
+    <br />
+  </div>
 </template>
 
 <script>
@@ -19,5 +29,22 @@ export default {
 };
 </script>
 
-<style
+<style scoped>
+.arrow {
+  font-weight: bold;
+  font-size: 2em;
+  color: #92c5fc;
+  background: #ffffff;
+}
+.arrow:hover {
+  background: #ffffff;
+  font-size: 2.2em;
+  color: #5ba9fc;
+}
+#left {
+  float: left;
+}
+#right {
+  float: right;
+}
 </style>
