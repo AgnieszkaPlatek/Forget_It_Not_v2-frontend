@@ -45,7 +45,6 @@ export default {
       num_sets: 0,
       num_flashcards: 0,
       flashcards: "",
-      table: false,
       // title: this.$store.state.title,
     };
   },
@@ -60,7 +59,6 @@ export default {
           },
         })
         .then((response) => (this.flashcards = response.data));
-      this.table = true;
     },
   },
   mounted() {
