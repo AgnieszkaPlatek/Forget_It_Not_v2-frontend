@@ -104,15 +104,15 @@ export default {
     },
     loadSet() {
       axios
-        .get("flashcard-sets/" + this.set_id, {
+        .get("learn/" + this.set_id, {
           headers: {
             Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
           },
         })
         .then(
           (response) => (
-            (this.flashcards = response.data["flashcards"]),
-            (this.num_flashcards = response.data["num_flashcards"])
+            (this.flashcards = response.data),
+            (this.num_flashcards = response.data.length)
           )
         );
       console.log("Flashcards from set loaded");

@@ -8,10 +8,19 @@ import './assets/main.css'
 import router from './router'
 // import store from './store'
 // import Vuex from 'vuex'
-
-createApp(App)
-    .use(router, VueAxios, axios)
-    .mount('#app')
+import { createStore } from 'vuex'
 
 
 axios.defaults.baseURL = "http://localhost:8000/api/";
+
+const store = createStore({
+    state() {
+        return {
+            title: 'The title of vuex store'
+        }
+    }
+})
+
+createApp(App)
+    .use(router, VueAxios, axios, store)
+    .mount('#app')
