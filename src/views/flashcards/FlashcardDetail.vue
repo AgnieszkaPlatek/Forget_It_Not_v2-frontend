@@ -43,7 +43,7 @@
         </button>
       </div>
     </div>
-    <div class="container mt-4 ml-3">
+    <div class="container mt-4">
       <div class="row mb-3"></div>
       <div class="fluid-container mt-5">
         <div class="mb-3 text-center">
@@ -56,20 +56,21 @@
       </div>
       <div class="text-center">
         <div class="btn-group">
-          <a
-            href=""
-            class="btn btn-update btn-sm px-5"
-            role="button"
-            aria-pressed="true"
-            >Edit</a
-          >
           <router-link
-            @click="deleteFlashcard"
-            :to="{ name: 'FlashcardList', params: { id: id } }"
-            class="btn btn-delete btn-sm ml-1 px-5"
-            >Delete</router-link
+            :to="{
+              name: 'FlashcardEdit',
+              params: { id: id, s_id: s_id, cards: cards, one: one },
+            }"
+            class="btn btn-update btn-sm px-5"
+            >Edit</router-link
           >
         </div>
+        <router-link
+          @click="deleteFlashcard"
+          :to="{ name: 'FlashcardList', params: { id: id } }"
+          class="btn btn-delete btn-sm ml-1 px-5"
+          >Delete</router-link
+        >
       </div>
     </div>
   </section>
@@ -83,7 +84,7 @@ export default {
   components: {
     FlashcardCard,
   },
-  props: ["id", "f_id", "cards", "one"],
+  props: ["id", "s_id", "cards", "one"],
   data() {
     return {
       setname: "",
@@ -99,17 +100,16 @@ export default {
     };
   },
   mounted() {
-    console.log(this.one);
     if (this.one) {
       console.log("one");
-      this.loadFlashcard();
+      this.loadFlashcard(this.id);
     } else {
       console.log("all set");
       this.flashcards = JSON.parse(this.cards);
       this.username = this.flashcards[0]["owner_name"];
       this.setname = this.flashcards[0]["set_name"];
       this.index = this.flashcards.findIndex(
-        (flashcard) => flashcard.id == this.f_id
+        (flashcard) => flashcard.id == this.id
       );
       this.getFlashcard(this.index);
     }
@@ -160,12 +160,24 @@ export default {
       });
       alert("Flashcard has been deleted!");
     },
-    editFlashcard() {},
-    loadFlashcard() {
-      this.flashcard = JSON.parse(this.cards);
-      this.username = this.flashcard["owner_name"];
-      this.setname = this.flashcard["set_name"];
-      this.cardtext = this.flashcard.back;
+    loadFlashcard(f_id) {
+      console.log("loading");
+      axios
+        .get("flashcards/" + f_id, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
+        .then((response) =>
+          ((this.flashcard = response.data),
+          (this.cardtext = response.data["back"])(
+            (this.setname = response.data["set_name"])
+          ))((this.username = response.data["owner_name"]))(
+            (this.added = response.deleteFlashcard["added"])
+          )
+        )
+        .catch((error) => console.log(error));
+      console.log(this.flashcard);
     },
   },
 };

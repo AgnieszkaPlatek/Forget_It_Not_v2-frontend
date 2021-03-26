@@ -44,14 +44,14 @@ export default {
         this.cards = JSON.stringify(this.flashcards);
         this.one = "";
       } else {
-        this.cards = JSON.stringify(flashcard);
+        this.cards = "";
         this.one = true;
       }
       this.$router.push({
         name: "FlashcardDetail",
         params: {
-          id: flashcard.flashcard_set,
-          f_id: flashcard.id,
+          id: flashcard.id,
+          s_id: flashcard.flashcard_set,
           cards: this.cards,
           one: this.one,
         },
