@@ -4,7 +4,8 @@
     <div class="col-xl-11">
       <div class="content-section">
         <div class="mx-3 mx-md-5">
-          <router-view class="mb-4" />
+          <router-view />
+          <br class="mb-4" />
           <NavArrows />
         </div>
       </div>
@@ -15,7 +16,6 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
 import NavArrows from "./components/NavArrows.vue";
-
 export default {
   name: "App",
   components: {
@@ -27,6 +27,9 @@ export default {
       username: "",
     };
   },
+  // mounted() {
+  //   console.log(this.$store.state);
+  // },
 };
 </script>
 

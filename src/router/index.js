@@ -4,6 +4,7 @@ import AppWelcome from '../views/AppWelcome.vue'
 import SetList from '../views/SetList.vue'
 import SetDelete from '../views/SetDelete.vue'
 import FlashcardDetail from '../views/flashcards/FlashcardDetail.vue'
+import FlashcardEdit from '../views/flashcards/FlashcardEdit.vue'
 import FlashcardAdd from '../views/flashcards/FlashcardAdd.vue'
 import FlashcardList from '../views/flashcards/FlashcardList.vue'
 import FlashcardFilter from '../views/flashcards/FlashcardFilter.vue'
@@ -35,9 +36,18 @@ const routes = [
         component: SetList
     },
     {
-        path: '/flashcards/:id',
+        path: '/flashcard/:id',
         name: 'FlashcardDetail',
         component: FlashcardDetail,
+        props: true,
+        beforeEnter(to, from, next) {
+            next(Number.isInteger(Number(to.params.id)))
+        }
+    },
+    {
+        path: '/flashcard/edit/:id',
+        name: 'FlashcardEdit',
+        component: FlashcardEdit,
         props: true,
         beforeEnter(to, from, next) {
             next(Number.isInteger(Number(to.params.id)))
@@ -53,7 +63,7 @@ const routes = [
         }
     },
     {
-        path: '/sets/:id',
+        path: '/set/:id',
         name: 'FlashcardList',
         component: FlashcardList,
         props: true,
@@ -62,7 +72,7 @@ const routes = [
         }
     },
     {
-        path: '/sets/filter/:id',
+        path: '/set/filter/:id',
         name: 'FlashcardFilter',
         component: FlashcardFilter,
         props: true,
@@ -71,7 +81,7 @@ const routes = [
         }
     },
     {
-        path: '/sets/:id/delete',
+        path: '/set/:id/delete',
         name: 'SetDelete',
         component: SetDelete,
         props: true,

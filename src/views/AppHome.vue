@@ -77,13 +77,12 @@ export default {
         )
       )
       .catch((error) => console.log(error));
-    // console.log(this.$store.state.title);
   },
-  // computed: {
-  //   title() {
-  //     return this.$store.state.title;
-  //   },
-  // },
+  computed: {
+    title() {
+      return this.$store.state.title;
+    },
+  },
 };
 </script>
 
