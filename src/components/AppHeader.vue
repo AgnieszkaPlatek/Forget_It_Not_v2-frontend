@@ -40,22 +40,22 @@
             >
             <router-link
               :to="{ name: 'UserLogout' }"
+              @click="logout"
               class="nav-item nav-link"
-              href=""
               >Log out</router-link
             >
           </div>
           <!-- {% else %} -->
-          <div v-else class="navbar-nav">
+          <div v-else class="navbar-nav ml-auto">
             <router-link
               :to="{ name: 'UserLogin' }"
-              class="nav-item nav-link"
+              class="nav-item nav-link mr-4"
               href=""
               >Log in</router-link
             >
             <router-link
               :to="{ name: 'UserRegister' }"
-              class="nav-item nav-link"
+              class="nav-item nav-link mr-5"
               href=""
               >Register</router-link
             >
@@ -69,11 +69,18 @@
 <script>
 export default {
   name: "Nav",
-  props: ["username"],
-  data() {
-    return {
-      authenticated: true,
-    };
+  computed: {
+    authenticated() {
+      return this.$store.state.isAuthenticated;
+    },
+    username() {
+      return this.$store.state.authUser;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.commit("removeToken");
+    },
   },
 };
 </script>

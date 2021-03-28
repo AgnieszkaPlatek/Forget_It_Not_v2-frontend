@@ -1,6 +1,5 @@
 <template>
   <section class="mt-4">
-    <!-- <h1>{{ title }}</h1> -->
     <div class="text-center">
       <h1 class="h2 mb-3">
         Hello <b>{{ username }}</b
@@ -41,11 +40,9 @@ export default {
   props: ["checked_query"],
   data() {
     return {
-      username: "",
       num_sets: 0,
       num_flashcards: 0,
       flashcards: "",
-      // title: this.$store.state.title,
     };
   },
   methods: {
@@ -53,34 +50,23 @@ export default {
       console.log("Searching for flashcard");
       console.log(query);
       axios
-        .get("flashcards/?search=" + query, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("flashcards/?search=" + query)
         .then((response) => (this.flashcards = response.data));
     },
   },
   mounted() {
     axios
-      .get("auth/users/me/", {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
-      .then(
-        (response) => (
-          (this.username = response.data["username"]),
-          (this.num_sets = response.data["num_sets"])(
-            (this.num_flashcards = response.data["num_flashcards"])
-          )
+      .get("auth/users/me/")
+      .then((response) =>
+        (this.num_sets = response.data["num_sets"])(
+          (this.num_flashcards = response.data["num_flashcards"])
         )
       )
       .catch((error) => console.log(error));
   },
   computed: {
-    title() {
-      return this.$store.state.title;
+    username() {
+      return this.$store.state.authUser;
     },
   },
 };

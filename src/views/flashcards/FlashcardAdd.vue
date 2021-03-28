@@ -57,10 +57,6 @@ export default {
           front: this.front,
           back: this.back,
         },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
       }).catch((err) => {
         console.log("error in request", err);
       });
