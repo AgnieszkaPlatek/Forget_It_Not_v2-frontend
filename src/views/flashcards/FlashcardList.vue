@@ -174,7 +174,6 @@ export default {
     return {
       created: "", //20 January, 2021
       num_flashcards: 0,
-      username: "",
       flashcards: [],
       authenticated: true,
       next_link: "",
@@ -208,7 +207,6 @@ export default {
           (response) => (
             (this.num_flashcards = response.data["num_flashcards"]),
             (this.setname = response.data["name"]),
-            (this.username = response.data["owner_name"]),
             (this.created = response.data["created"]).catch((error) =>
               console.log(error)
             )
@@ -229,7 +227,6 @@ export default {
           (this.next_page = response.data["next_page"]),
           (this.previous_page = response.data["previous_page"]),
           (this.setname = response.data["results"][0]["set_name"]),
-          (this.username = response.data["results"][0]["owner_name"]),
           (this.created = response.data["results"][0]["set_created"]),
           (this.pages = response.data["pages"]),
           (this.current_page = response.data["current_page"]),
@@ -247,11 +244,7 @@ export default {
       console.log("Searching for flashcard");
       console.log(query);
       axios
-        .get("search/" + this.id + "?search=" + query, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("search/" + this.id + "?search=" + query)
         .then((response) => (this.search_results = response.data));
     },
     toggleRename() {
@@ -271,6 +264,9 @@ export default {
     },
   },
   computed: {
+    username() {
+      return this.$store.state.authUser;
+    },
     pagesToShow() {
       return this.pages.filter(
         (page) => page < this.current_page + 3 && page > this.current_page - 3

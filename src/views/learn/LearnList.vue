@@ -92,29 +92,17 @@ export default {
   data() {
     return {
       total_flashcards: 0,
-      username: "",
       sets: [],
     };
   },
   mounted() {
     axios
-      .get("flashcard-sets/", {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
+      .get("flashcard-sets/")
       .then((response) => (this.sets = response.data));
     axios
-      .get("auth/users/me/", {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
+      .get("auth/users/me/")
       .then(
-        (response) => (
-          (this.total_flashcards = response.data["num_flashcards"]),
-          (this.username = response.data["username"])
-        )
+        (response) => (this.total_flashcards = response.data["num_flashcards"])
       );
   },
   computed: {
@@ -125,6 +113,9 @@ export default {
       return this.sets.filter(
         (set) => set.num_flashcards <= 20 && set.num_flashcards > 0
       );
+    },
+    username() {
+      return this.$store.state.authUser;
     },
   },
 };

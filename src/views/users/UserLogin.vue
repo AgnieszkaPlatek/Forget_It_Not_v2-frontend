@@ -49,9 +49,6 @@ export default {
           username: this.username,
           password: this.password,
         },
-        headers: {
-          "Content-Type": "application/json",
-        },
       })
         .then((response) => {
           this.$store.commit("updateToken", response.data.auth_token);
@@ -65,17 +62,6 @@ export default {
         .catch((err) => {
           console.log("error in request", err);
         });
-      // const base = {
-      //   baseURL: this.$store.state.endpoints.baseUrl,
-      //   headers: {
-      //     Authorization: "Token ${this.$store.state.token}",
-      //     "Content-Type": "application/json",
-      //   },
-      //   xhrFields: {
-      //     withCredentials: true,
-      //   },
-      // };
-      // axios.create(base);
       this.$router.push({ name: "Home" });
     },
   },

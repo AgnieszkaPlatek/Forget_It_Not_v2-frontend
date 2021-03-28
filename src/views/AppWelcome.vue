@@ -14,21 +14,21 @@
       <h5 class="text-center mb-3">or just</h5>
     </div>
     <div class="text-center mt-3">
-      <form method="POST">
-        <button
-          id="grad"
-          class="btn btn-lg-center px-5 py-3 text-center"
-          type="submit"
-          name="demo"
-        >
-          <b> TRY IT OUT</b>
-        </button>
-      </form>
+      <button
+        @click="demo"
+        id="grad"
+        class="btn btn-lg-center px-5 py-3 text-center"
+        type="submit"
+        name="demo"
+      >
+        <b> TRY IT OUT</b>
+      </button>
     </div>
   </section>
 </template>
 
 <script>
+import axios from "axios";
 import FlashcardCard from "../components/FlashcardCard.vue";
 export default {
   name: "AppWelcome",
@@ -39,6 +39,27 @@ export default {
     return {
       cardtext: "flashcards",
     };
+  },
+  methods: {
+    demo() {
+      console.log("Started authenticating demo");
+      axios({
+        method: "put",
+        url: "demo/",
+      })
+        .then((response) => {
+          this.$store.commit("updateToken", response.data["token"]);
+          console.log("demo");
+          this.$store.commit("authenticate", {
+            authUser: "demo",
+            isAuthenticated: true,
+          });
+        })
+        .catch((err) => {
+          console.log("error in request", err);
+        });
+      this.$router.push({ name: "Home" });
+    },
   },
 };
 </script>

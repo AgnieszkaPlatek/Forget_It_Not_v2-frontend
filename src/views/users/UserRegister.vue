@@ -1,10 +1,6 @@
 <template>
   <section>
     <h2 class="text-center mt-3">Register account</h2>
-    <p>{{ username }}</p>
-    <p>{{ email }}</p>
-    <p>{{ password }}</p>
-    <p>{{ re_password }}</p>
     <form @submit.prevent="register">
       <label>Username:</label>
       <input type="username" required v-model="username" />
@@ -53,9 +49,6 @@ export default {
           email: this.email,
           password: this.password,
           re_password: this.password,
-        },
-        headers: {
-          "Content-Type": "application/json",
         },
       }).catch((err) => {
         console.log("error in request", err);

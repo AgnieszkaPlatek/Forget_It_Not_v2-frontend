@@ -30,9 +30,6 @@ export default {
       axios({
         method: "delete",
         url: "auth/users/me",
-        headers: {
-          Authorization: "Token 3ba62b1f6855e93af81af6fe28ccd388a7643874",
-        },
       }).catch((err) => {
         console.log("error in request", err);
       });

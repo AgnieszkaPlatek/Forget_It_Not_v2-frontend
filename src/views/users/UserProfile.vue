@@ -38,7 +38,6 @@ export default {
   name: "UserProfile",
   data() {
     return {
-      username: "",
       email: "",
       num_sets: "",
       num_flashcards: "",
@@ -53,13 +52,17 @@ export default {
       })
       .then(
         (response) => (
-          (this.username = response.data["username"]),
           (this.email = response.data["email"]),
           (this.num_sets = response.data["num_sets"]),
           (this.num_flashcards = response.data["num_flashcards"])
         )
       )
       .catch((error) => console.log(error));
+  },
+  computed: {
+    username() {
+      return this.$store.state.authUser;
+    },
   },
   // methods: {
   //   updateUserData() {},

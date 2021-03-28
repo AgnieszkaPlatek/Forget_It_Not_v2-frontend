@@ -2,9 +2,9 @@
   <header class="site-header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-darkblue fixed-top">
       <div class="container-fluid mx-md-3">
-        <router-link :to="{ name: 'Home' }" class="navbar-brand">
+        <span class="navbar-brand" id="logo" @click="logoRedirect">
           <img src="@/assets/logo.png" alt="Logo" />
-        </router-link>
+        </span>
         <button
           class="navbar-toggler"
           type="button"
@@ -81,6 +81,14 @@ export default {
     logout() {
       this.$store.commit("removeToken");
     },
+    logoRedirect() {
+      if (this.authenticated) {
+        console.log("authenticated");
+        this.$router.push({ name: "Home" });
+      } else {
+        this.$router.push({ name: "Welcome" });
+      }
+    },
   },
 };
 </script>
@@ -150,5 +158,8 @@ header img {
 .dropdown-item:hover {
   background-color: #cccccc;
   color: #000000 !important;
+}
+#logo {
+  cursor: pointer;
 }
 </style>

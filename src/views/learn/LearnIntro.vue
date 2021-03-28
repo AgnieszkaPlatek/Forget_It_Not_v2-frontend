@@ -89,11 +89,7 @@ export default {
   methods: {
     loadAll() {
       axios
-        .get("flashcards/", {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("flashcards/")
         .then(
           (response) => (
             (this.flashcards = response.data),
@@ -104,11 +100,7 @@ export default {
     },
     loadSet() {
       axios
-        .get("learn/" + this.set_id, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("learn/" + this.set_id)
         .then(
           (response) => (
             (this.flashcards = response.data),

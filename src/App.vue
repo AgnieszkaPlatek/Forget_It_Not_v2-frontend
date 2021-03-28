@@ -1,6 +1,6 @@
 <template>
   <AppHeader :username="username" />
-  <!-- <main role="main" class="container">
+  <main role="main" class="container">
     <div class="col-xl-11">
       <div class="content-section">
         <div class="mx-3 mx-md-5">
@@ -10,26 +10,26 @@
         </div>
       </div>
     </div>
-  </main> -->
+  </main>
 </template>
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
-// import NavArrows from "./components/NavArrows.vue";
+import NavArrows from "./components/NavArrows.vue";
 export default {
   name: "App",
   components: {
     AppHeader,
-    // NavArrows,
+    NavArrows,
   },
   data() {
     return {
       username: "",
     };
   },
-  // mounted() {
-  //   console.log(this.$store.state);
-  // },
+  mounted() {
+    console.log(this.$store.state);
+  },
 };
 </script>
 

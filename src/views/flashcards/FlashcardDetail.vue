@@ -88,7 +88,6 @@ export default {
   data() {
     return {
       setname: "",
-      username: "",
       flashcards: [],
       flashcard: "",
       authenticated: true,
@@ -163,11 +162,7 @@ export default {
     loadFlashcard(f_id) {
       console.log("loading");
       axios
-        .get("flashcards/" + f_id, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("flashcards/" + f_id)
         .then((response) =>
           ((this.flashcard = response.data),
           (this.cardtext = response.data["back"])(
@@ -178,6 +173,11 @@ export default {
         )
         .catch((error) => console.log(error));
       console.log(this.flashcard);
+    },
+  },
+  computed: {
+    username() {
+      return this.$store.state.authUser;
     },
   },
 };

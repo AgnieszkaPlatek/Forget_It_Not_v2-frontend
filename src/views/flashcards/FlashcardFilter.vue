@@ -155,11 +155,7 @@ export default {
     getAllCards(url) {
       console.log("Started getting flashcards from", url);
       axios
-        .get(url, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get(url)
         .then((response) =>
           (this.cards = response.data).catch((error) => console.log(error))
         );
@@ -168,11 +164,7 @@ export default {
     loadFlashcards(url) {
       console.log("Started loading", url);
       axios
-        .get(url, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get(url)
         .then((response) =>
           ((this.flashcards = response.data["results"]),
           (this.next_page = response.data["next_page"]),

@@ -55,6 +55,7 @@ export default {
     },
   },
   mounted() {
+    this.$forceUpdate();
     axios
       .get("auth/users/me/")
       .then((response) =>

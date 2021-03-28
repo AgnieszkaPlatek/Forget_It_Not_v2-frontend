@@ -53,11 +53,7 @@ export default {
   },
   mounted() {
     axios
-      .get("flashcards/" + this.id, {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
+      .get("flashcards/" + this.id)
       .then(
         (response) => (
           (this.back = response.data["back"]),
@@ -81,10 +77,6 @@ export default {
         data: {
           front: this.front,
           back: this.back,
-        },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
       }).catch((error) => console.log(error));
 

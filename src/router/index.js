@@ -139,7 +139,7 @@ const routes = [
     },
     {
         path: '',
-        redirect: 'sets'
+        redirect: 'welcome'
     }
 ]
 
