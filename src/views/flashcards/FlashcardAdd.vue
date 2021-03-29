@@ -15,11 +15,11 @@
       </form>
     </div>
     <div v-if="added" id="after" class="text-center my-3">
-      <h5 class="alert">Flashcard has been added!</h5>
+      <h4 class="alert">Flashcard has been added!</h4>
       <button
         @click="addAnother"
         type="submit"
-        class="btn btn-primary btn-block mt-4 px-5"
+        class="btn btn-primary btn-block mt-3 px-5"
       >
         Add another
       </button>
@@ -27,7 +27,7 @@
     <div class="text-center">
       <router-link
         :to="{ name: 'FlashcardList', params: { id: id } }"
-        class="btn btn-back btn-sm my-4 px-5"
+        class="btn btn-back btn-sm my-2 px-5"
         role="button"
         >Back</router-link
       >
@@ -56,6 +56,10 @@ export default {
           flashcard_set: this.id,
           front: this.front,
           back: this.back,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
         },
       }).catch((err) => {
         console.log("error in request", err);

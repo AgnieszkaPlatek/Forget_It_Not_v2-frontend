@@ -23,12 +23,14 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
-        component: AppHome
+        component: AppHome,
+        meta: { requiresAuth: true }
     },
     {
         path: '/welcome',
         name: 'Welcome',
-        component: AppWelcome
+        component: AppWelcome,
+        meta: { requiresAuth: false }
     },
     {
         path: '/sets',
@@ -150,5 +152,23 @@ const router = createRouter({
         window.scrollTo(0, 0);
     }
 })
+
+
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//       // this route requires auth, check if logged in
+//       // if not, redirect to login page.
+//       if (!auth.loggedIn()) {
+//         next({
+//           path: '/login',
+//           query: { redirect: to.fullPath }
+//         })
+//       } else {
+//         next()
+//       }
+//     } else {
+//       next() // make sure to always call next()!
+//     }
+//   })
 
 export default router

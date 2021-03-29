@@ -7,11 +7,11 @@
       </h1>
     </div>
     <div class="text-center">
-      <span v-if="num_sets === 1" class="h5">You have <b>1</b> set</span
+      <span v-if="num_sets == 1" class="h5">You have <b>1</b> set</span
       ><span v-else class="h5"
         >You have <b>{{ num_sets }}</b> sets</span
       >
-      <span v-if="num_flashcards === 1" class="h5">
+      <span v-if="num_flashcards == 1" class="h5">
         and <b>1</b> flashcard. Keep it up!</span
       >
       <span v-else class="h5">
@@ -50,20 +50,28 @@ export default {
       console.log("Searching for flashcard");
       console.log(query);
       axios
-        .get("flashcards/?search=" + query)
+        .get("flashcards/?search=" + query, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
         .then((response) => (this.flashcards = response.data));
     },
   },
   mounted() {
-    this.$forceUpdate();
     axios
-      .get("auth/users/me/")
+      .get("auth/users/me/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
       .then((response) =>
         (this.num_sets = response.data["num_sets"])(
           (this.num_flashcards = response.data["num_flashcards"])
         )
       )
       .catch((error) => console.log(error));
+    this.$forceUpdate();
   },
   computed: {
     username() {

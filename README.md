@@ -1,6 +1,5 @@
 # frontend-forgetitnot
-I am working on this project during mentorship DareIT programme.
-It is supervised by my mentor.
+I am working on this project during mentorship DareIT programme. It is supervised by my mentor.
 
 It is a frontend for Forget-It-Not application.
 

@@ -97,10 +97,18 @@ export default {
   },
   mounted() {
     axios
-      .get("flashcard-sets/")
+      .get("flashcard-sets/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
       .then((response) => (this.sets = response.data));
     axios
-      .get("auth/users/me/")
+      .get("auth/users/me/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
       .then(
         (response) => (this.total_flashcards = response.data["num_flashcards"])
       );

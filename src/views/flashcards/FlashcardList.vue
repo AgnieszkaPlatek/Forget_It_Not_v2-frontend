@@ -146,6 +146,12 @@
           class="btn btn-delete btn-sm ml-1 px-5 mb-2"
           >Delete Set</router-link
         >
+        <router-link
+          :to="{ name: 'SetList', params: { id: id } }"
+          class="btn btn-back btn-sm ml-1 px-5 mb-2"
+          role="button"
+          >Back</router-link
+        >
       </div>
     </div>
     <div v-if="renaming">
@@ -244,7 +250,11 @@ export default {
       console.log("Searching for flashcard");
       console.log(query);
       axios
-        .get("search/" + this.id + "?search=" + query)
+        .get("search/" + this.id + "?search=" + query, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
         .then((response) => (this.search_results = response.data));
     },
     toggleRename() {

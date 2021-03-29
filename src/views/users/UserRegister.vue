@@ -16,6 +16,9 @@
         </button>
       </div>
     </form>
+    <div v-if="message" id="message" class="mt-3 mx-5 text-center message">
+      <h5>{{ message }}</h5>
+    </div>
     <div class="text-center pt-3">
       <small class="text-muted">
         Already Have An Account?
@@ -37,6 +40,7 @@ export default {
       email: "",
       password: "",
       re_password: "",
+      message: "",
     };
   },
   methods: {
@@ -53,7 +57,7 @@ export default {
       }).catch((err) => {
         console.log("error in request", err);
       });
-      this.$router.push("sets");
+      this.message = "Please confirm your email to complete registration.";
     },
   },
 };

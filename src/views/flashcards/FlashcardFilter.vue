@@ -164,7 +164,11 @@ export default {
     loadFlashcards(url) {
       console.log("Started loading", url);
       axios
-        .get(url)
+        .get(url, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
         .then((response) =>
           ((this.flashcards = response.data["results"]),
           (this.next_page = response.data["next_page"]),

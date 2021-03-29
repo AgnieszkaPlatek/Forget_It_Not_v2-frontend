@@ -11,7 +11,11 @@
           Sign In
         </button>
       </div>
+      <div v-if="message" class="mt-3 text-center warning">
+        <h5>{{ message }}</h5>
+      </div>
     </form>
+
     <div class="text-center mt-2">
       <small class="text-muted">
         <a href="">Forgot password?</a>
@@ -37,6 +41,7 @@ export default {
     return {
       username: "",
       password: "",
+      message: "",
     };
   },
   methods: {
@@ -58,11 +63,12 @@ export default {
             authUser: this.username,
             isAuthenticated: true,
           });
+          this.$router.push({ name: "Home" });
         })
         .catch((err) => {
           console.log("error in request", err);
+          this.message = "Wrong username or password. Please try again.";
         });
-      this.$router.push({ name: "Home" });
     },
   },
 };

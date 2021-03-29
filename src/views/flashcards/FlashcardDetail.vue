@@ -48,7 +48,7 @@
       <div class="fluid-container mt-5">
         <div class="mb-3 text-center">
           <router-link
-            :to="{ name: 'FlashcardAdd' }"
+            :to="{ name: 'FlashcardAdd', params: { id: s_id } }"
             class="btn btn-primary mb-2 px-5 py-3"
             >ADD FLASHCARD</router-link
           >
@@ -64,13 +64,18 @@
             class="btn btn-update btn-sm px-5"
             >Edit</router-link
           >
+          <router-link
+            @click="deleteFlashcard"
+            :to="{ name: 'FlashcardList', params: { id: s_id } }"
+            class="btn btn-delete btn-sm ml-1 px-5"
+            >Delete</router-link
+          >
+          <router-link
+            :to="{ name: 'FlashcardList', params: { id: s_id } }"
+            class="btn btn-back btn-sm px-5 ml-1"
+            >Back</router-link
+          >
         </div>
-        <router-link
-          @click="deleteFlashcard"
-          :to="{ name: 'FlashcardList', params: { id: id } }"
-          class="btn btn-delete btn-sm ml-1 px-5"
-          >Delete</router-link
-        >
       </div>
     </div>
   </section>
@@ -162,7 +167,11 @@ export default {
     loadFlashcard(f_id) {
       console.log("loading");
       axios
-        .get("flashcards/" + f_id)
+        .get("flashcards/" + f_id, {
+          headers: {
+            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+          },
+        })
         .then((response) =>
           ((this.flashcard = response.data),
           (this.cardtext = response.data["back"])(

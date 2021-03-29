@@ -5,7 +5,7 @@ const store = createStore({
         return {
             authUser: '',
             isAuthenticated: false,
-            token: localStorage.getItem('token'),
+            token: localStorage.getItem('token') | '',
             endpoints: {
                 baseUrl: 'http://localhost:8000/api/'
             }

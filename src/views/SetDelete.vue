@@ -39,6 +39,9 @@ export default {
       axios({
         method: "delete",
         url: "flashcard-sets/" + this.id,
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
       }).catch((err) => {
         console.log("error in request", err);
       });

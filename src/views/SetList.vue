@@ -73,6 +73,7 @@ export default {
   data() {
     return {
       sets: [],
+      username: "",
       num_sets: 0,
       creating: false,
     };
@@ -84,18 +85,19 @@ export default {
   },
   mounted() {
     axios
-      .get("flashcard-sets/")
+      .get("flashcard-sets/", {
+        headers: {
+          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
+        },
+      })
       .then(
         (response) => (
-          (this.sets = response.data), (this.num_sets = response.data.length)
+          (this.sets = response.data),
+          (this.username = response.data[0]["owner_name"]),
+          (this.num_sets = response.data.length)
         )
       )
       .catch((error) => console.log(error));
-  },
-  computed: {
-    username() {
-      return this.$store.state.authUser;
-    },
   },
 };
 </script>
