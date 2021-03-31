@@ -201,10 +201,10 @@ export default {
     this.loadFlashcards(this.url + this.id);
   },
   methods: {
-    loadEmpty(url) {
+    loadEmpty() {
       console.log("Loading empty");
       axios
-        .get(url, {
+        .get("flashcard-sets/" + this.id, {
           headers: {
             Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
           },

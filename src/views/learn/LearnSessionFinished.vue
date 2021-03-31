@@ -6,11 +6,6 @@
         >thumb_up</i
       >
     </div>
-    <!-- <div v-if="set" class="mb-4 ml-3">
-      <h4>
-        You finished learning<strong>{{ set.name }}!</strong>
-      </h4>
-    </div> -->
     <div class="mb-4 ml-3">
       <h4>You finished learning your flashcards!</h4>
     </div>

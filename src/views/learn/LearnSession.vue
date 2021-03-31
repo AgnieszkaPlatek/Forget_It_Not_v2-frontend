@@ -45,7 +45,7 @@
     <div v-if="!finished" class="row">
       <div class="col-4 offset-4 col-md-5 offset-md-5"></div>
       <router-link
-        :to="{ name: 'LearnList' }"
+        :to="{ name: 'SetList' }"
         class="btn btn-back btn-sm d-inline-block col-4 col-md-2 mb-3"
         role="button"
         >Cancel</router-link
