@@ -204,11 +204,7 @@ export default {
     loadEmpty() {
       console.log("Loading empty");
       axios
-        .get("flashcard-sets/" + this.id, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("flashcard-sets/" + this.id)
         .then(
           (response) => (
             (this.num_flashcards = response.data["num_flashcards"]),
@@ -222,11 +218,7 @@ export default {
     loadFlashcards(url) {
       console.log("Loading flashcards");
       axios
-        .get(url, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get(url)
         .then((response) =>
           ((this.flashcards = response.data["results"]),
           (this.num_flashcards = response.data["count"]),
@@ -250,11 +242,7 @@ export default {
       console.log("Searching for flashcard");
       console.log(query);
       axios
-        .get("search/" + this.id + "?search=" + query, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("search/" + this.id + "?search=" + query)
         .then((response) => (this.search_results = response.data));
     },
     toggleRename() {

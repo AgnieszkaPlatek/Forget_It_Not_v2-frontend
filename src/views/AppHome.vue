@@ -45,33 +45,24 @@ export default {
       flashcards: "",
     };
   },
-  methods: {
-    searchFlashcard(query) {
-      console.log("Searching for flashcard");
-      console.log(query);
-      axios
-        .get("flashcards/?search=" + query, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
-        .then((response) => (this.flashcards = response.data));
-    },
-  },
   mounted() {
     axios
-      .get("auth/users/me/", {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
+      .get("auth/users/me/")
       .then((response) =>
         (this.num_sets = response.data["num_sets"])(
           (this.num_flashcards = response.data["num_flashcards"])
         )
       )
       .catch((error) => console.log(error));
-    this.$forceUpdate();
+  },
+  methods: {
+    searchFlashcard(query) {
+      console.log("Searching for flashcard");
+      console.log(query);
+      axios
+        .get("flashcards/?search=" + query)
+        .then((response) => (this.flashcards = response.data));
+    },
   },
   computed: {
     username() {

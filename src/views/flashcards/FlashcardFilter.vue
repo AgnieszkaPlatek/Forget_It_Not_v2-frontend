@@ -90,7 +90,7 @@
     <!-- <div v-if="message" class="ml-5 mt-5 text-center">
       <h4>{{ message }}</h4>
     </div> -->
-    <div class="text-right mr-5">
+    <div class="text-center mr-5">
       <router-link
         :to="{ name: 'FlashcardList', params: { id: id } }"
         class="btn btn-back btn-sm px-5 mx-3 mt-4"
@@ -164,11 +164,7 @@ export default {
     loadFlashcards(url) {
       console.log("Started loading", url);
       axios
-        .get(url, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get(url)
         .then((response) =>
           ((this.flashcards = response.data["results"]),
           (this.next_page = response.data["next_page"]),

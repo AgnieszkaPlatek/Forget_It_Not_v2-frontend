@@ -1,11 +1,12 @@
 import { createStore } from 'vuex'
+import createPersistedState from "vuex-persistedstate"
 
 const store = createStore({
     state() {
         return {
             authUser: '',
             isAuthenticated: false,
-            token: localStorage.getItem('token') | '',
+            token: localStorage.getItem('token'),
             endpoints: {
                 baseUrl: 'http://localhost:8000/api/'
             }
@@ -27,7 +28,8 @@ const store = createStore({
             localStorage.removeItem('token');
             state.token = null
         }
-    }
+    },
+    plugins: [createPersistedState()]
 })
 
 

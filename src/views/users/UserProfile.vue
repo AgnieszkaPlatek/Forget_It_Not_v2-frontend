@@ -45,11 +45,7 @@ export default {
   },
   mounted() {
     axios
-      .get("auth/users/me", {
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
-      })
+      .get("auth/users/me")
       .then(
         (response) => (
           (this.email = response.data["email"]),

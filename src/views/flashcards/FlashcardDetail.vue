@@ -156,9 +156,6 @@ export default {
       axios({
         method: "delete",
         url: "flashcards/" + this.flashcard.id,
-        headers: {
-          Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-        },
       }).catch((err) => {
         console.log("error in request", err);
       });
@@ -167,11 +164,7 @@ export default {
     loadFlashcard(f_id) {
       console.log("loading");
       axios
-        .get("flashcards/" + f_id, {
-          headers: {
-            Authorization: "Token 4dcdca18cc571489b5840d2041ed8b36588e0e33",
-          },
-        })
+        .get("flashcards/" + f_id)
         .then((response) =>
           ((this.flashcard = response.data),
           (this.cardtext = response.data["back"])(
