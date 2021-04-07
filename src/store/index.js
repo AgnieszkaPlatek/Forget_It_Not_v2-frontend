@@ -27,6 +27,7 @@ const store = createStore({
         removeToken(state) {
             localStorage.removeItem('token');
             state.token = null
+            state.isAuthenticated = false
         }
     },
     plugins: [createPersistedState()]

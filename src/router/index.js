@@ -14,6 +14,7 @@ import LearnIntro from '../views/learn/LearnIntro.vue'
 import UserRegister from '../views/users/UserRegister.vue'
 import UserLogin from '../views/users/UserLogin.vue'
 import UserLogout from '../views/users/UserLogout.vue'
+import UserActivate from '../views/users/UserActivate.vue'
 import UserProfile from '../views/users/UserProfile.vue'
 import UserProfileDelete from '../views/users/UserProfileDelete.vue'
 import NotFound from '../views/NotFound.vue'
@@ -133,6 +134,12 @@ const routes = [
         path: '/profile/delete',
         name: 'UserProfileDelete',
         component: UserProfileDelete
+    },
+    {
+        path: '/activate/:uid/:token',
+        name: 'UserActivate',
+        component: UserActivate,
+        props: true
     },
     {
         path: '/:catchAll(.*)',
