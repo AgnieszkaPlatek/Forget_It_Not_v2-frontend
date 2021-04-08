@@ -54,6 +54,8 @@ export default {
         )
       )
       .catch((error) => console.log(error));
+    console.log("num_sets", this.num_sets);
+    console.log("nunm_flashcards", this.num_flashcards);
   },
   methods: {
     searchFlashcard(query) {

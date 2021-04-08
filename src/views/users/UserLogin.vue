@@ -15,10 +15,11 @@
         <h5>{{ message }}</h5>
       </div>
     </form>
-
     <div class="text-center mt-2">
       <small class="text-muted">
-        <a href="">Forgot password?</a>
+        <router-link :to="{ name: 'PasswordResetRequest' }"
+          >Forgot password?</router-link
+        >
       </small>
     </div>
     <div class="text-center pt-3">

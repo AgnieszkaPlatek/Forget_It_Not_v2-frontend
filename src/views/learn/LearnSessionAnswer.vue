@@ -1,5 +1,5 @@
 <template>
-  <flashcard-card :cardtext="text" />
+  <flashcard-card :answer="true" :cardtext="text" />
   <div class="text-center">
     <div class="ml-4 mb-2 mt-5">
       <h4>Did you know?</h4>
@@ -19,7 +19,7 @@
 import FlashcardCard from "@/components/FlashcardCard.vue";
 export default {
   name: "LearnSessionAnswer",
-  props: ["text"],
+  props: ["text", "answer"],
   components: {
     FlashcardCard,
   },

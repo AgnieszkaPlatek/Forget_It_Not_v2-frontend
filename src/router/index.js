@@ -17,6 +17,9 @@ import UserLogout from '../views/users/UserLogout.vue'
 import UserActivate from '../views/users/UserActivate.vue'
 import UserProfile from '../views/users/UserProfile.vue'
 import UserProfileDelete from '../views/users/UserProfileDelete.vue'
+import PasswordResetRequest from '../views/users/PasswordResetRequest.vue'
+import PasswordResetConfirm from '../views/users/PasswordResetConfirm.vue'
+import PasswordResetComplete from '../views/users/PasswordResetComplete.vue'
 import NotFound from '../views/NotFound.vue'
 
 
@@ -140,6 +143,22 @@ const routes = [
         name: 'UserActivate',
         component: UserActivate,
         props: true
+    },
+    {
+        path: '/password/reset/request',
+        name: 'PasswordResetRequest',
+        component: PasswordResetRequest
+    },
+    {
+        path: '/password/reset/confirm/:uid/:token',
+        name: 'PasswordResetConfirm',
+        component: PasswordResetConfirm,
+        props: true
+    },
+    {
+        path: '/password/reset/complete',
+        name: 'PasswordResetComplete',
+        component: PasswordResetComplete
     },
     {
         path: '/:catchAll(.*)',
