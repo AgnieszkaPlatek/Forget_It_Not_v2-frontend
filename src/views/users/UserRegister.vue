@@ -85,11 +85,26 @@ export default {
           password: this.password,
           re_password: this.password,
         },
-      }).catch((err) => {
-        console.log("error in request", err);
-      });
-      this.warning = "";
-      this.message = "Please confirm your email to complete registration.";
+      })
+        .then((response) => {
+          if (response.data) {
+            this.warning = "";
+            this.message =
+              "Please confirm your email to complete registration.";
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log("error in request", err);
+            if (err.response.data.username) {
+              this.warning = err.response.data.username[0];
+            }
+            if (err.response.data.email) {
+              this.warning = "A " + err.response.data.email[0];
+            }
+            return;
+          }
+        });
     },
   },
 };
