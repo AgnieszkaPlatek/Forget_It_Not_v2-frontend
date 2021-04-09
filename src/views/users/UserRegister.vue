@@ -10,7 +10,10 @@
       <input type="password" required v-model="password" />
       <label>Password confirmation:</label>
       <input type="password" required v-model="re_password" />
-      <div class="submit mt-5">
+      <div class="text-center mt-3">
+        <h5 v-if="warning" class="warning">{{ warning }}</h5>
+      </div>
+      <div class="submit mt-4">
         <button class="btn btn-primary btn-block px-5" type="submit">
           Sign Up
         </button>
@@ -41,10 +44,38 @@ export default {
       password: "",
       re_password: "",
       message: "",
+      warning: "",
     };
   },
   methods: {
     register() {
+      if (this.password != this.re_password) {
+        this.warning = "Passwords must be equal. Try again!";
+        return;
+      }
+      if (this.password.startsWith("qwerty")) {
+        this.warning =
+          "Your password should not begin with 'qwerty'. It is not safe. Try another one.";
+        return;
+      }
+      if (this.password.length < 8) {
+        this.warning = "Your password is too short. Try longer one.";
+        return;
+      }
+      if (!/[A-Z]/.test(this.password)) {
+        this.warning =
+          "Your password should contain at least one uppercase letter.";
+        return;
+      }
+      if (!/[a-z]/.test(this.password)) {
+        this.warning =
+          "Your password should contain at least one lowercase letter.";
+        return;
+      }
+      if (!/[0-9]/.test(this.password)) {
+        this.warning = "Your password should contain at least one digit.";
+        return;
+      }
       axios({
         method: "post",
         url: "auth/users/",
@@ -57,6 +88,7 @@ export default {
       }).catch((err) => {
         console.log("error in request", err);
       });
+      this.warning = "";
       this.message = "Please confirm your email to complete registration.";
     },
   },
