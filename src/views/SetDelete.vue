@@ -1,7 +1,7 @@
 <template>
   <section class="mt-4 mx-1">
     <div class="warning">
-      <h1 class="h3 text-center">
+      <h1 class="h4 text-center">
         Are you sure you want to delete your set <b>{{ setname }}</b
         >?
       </h1>

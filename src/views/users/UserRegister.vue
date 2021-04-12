@@ -55,7 +55,7 @@ export default {
       }
       if (this.password.startsWith("qwerty")) {
         this.warning =
-          "Your password should not begin with 'qwerty'. It is not safe. Try another one.";
+          "Your password should not begin with 'qwerty'. Try another one...";
         return;
       }
       if (this.password.length < 8) {
@@ -74,6 +74,11 @@ export default {
       }
       if (!/[0-9]/.test(this.password)) {
         this.warning = "Your password should contain at least one digit.";
+        return;
+      }
+      if (this.password == this.username) {
+        this.warning =
+          "Your password should not be the same as your username...";
         return;
       }
       axios({
@@ -133,5 +138,8 @@ input {
   border-bottom: 2px solid #ddd;
   color: #555;
   background-color: #ffffff;
+}
+.warning {
+  font-size: 1.1em;
 }
 </style>

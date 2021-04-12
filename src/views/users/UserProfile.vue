@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="text-center mt-3">
+    <div class="text-center mt-3 mb-5">
       <h2>{{ username }}</h2>
       <h6 class="mb-4">{{ email }}</h6>
       <p v-if="num_sets === 1" class="h5"><b>1</b> set</p>
@@ -12,19 +12,20 @@
         <b>{{ num_flashcards }}</b> flashcards
       </p>
     </div>
-    <!-- 
-    <form @submit="updateUserData">
+
+    <!-- <form @submit="updateUserData">
       <label>Username:</label>
       <input type="username" required v-model="username" />
       <label>Email:</label>
       <input type="email" required v-model="email" />
-          <div class="submit mt-5">
+      <div class="submit mt-5">
         <button class="btn btn-primary btn-block px-5" type="submit">
           Update
         </button>
       </div>
     </form> -->
-    <div class="text-right mt-5">
+    <hr />
+    <div class="text-center mt-5">
       <button class="btn btn-sm btn-delete col-4 col-lg-2 d-inline-block">
         Delete account
       </button>

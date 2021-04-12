@@ -38,6 +38,7 @@ form {
   text-align: left;
   padding: 20px;
   border-radius: 15px;
+  margin-left: 0px;
 }
 label {
   color: #555;

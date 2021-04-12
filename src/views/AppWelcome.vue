@@ -46,19 +46,22 @@ export default {
       axios({
         method: "put",
         url: "demo/",
+        withCredentials: true,
       })
         .then((response) => {
+          console.log(response);
+          console.log(response.data);
           this.$store.commit("updateToken", response.data["token"]);
           console.log("demo");
           this.$store.commit("authenticate", {
             authUser: "demo",
             isAuthenticated: true,
           });
+          this.$router.push({ name: "Home" });
         })
         .catch((err) => {
           console.log("error in request", err);
         });
-      this.$router.push({ name: "Home" });
     },
   },
 };

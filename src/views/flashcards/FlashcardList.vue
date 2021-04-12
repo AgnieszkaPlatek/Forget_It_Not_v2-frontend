@@ -16,10 +16,10 @@
       v-if="num_flashcards > 10"
       class="mb-4 text-top col-lg-12 fluid-container row"
     >
-      <div class="col-lg-6 my-2">
+      <div class="col-12 col-lg-5 my-2">
         <SearchBar @search="searchFlashcard" />
       </div>
-      <div class="col-lg-6">
+      <div class="col-12 col-lg-7">
         <button @click="goToFilter(id)" id="set_filter" class="btn btn-block">
           Filter flashcards by date
         </button>
@@ -76,6 +76,28 @@
             href=""
             >Choose part to learn</a
           >
+        </div>
+      </div>
+    </div>
+    <div v-if="num_flashcards > 20" class="text-center">
+      <div class="dropdown dropdown">
+        <button
+          type="button"
+          id="sort"
+          class="btn btn-secondary dropdown-toggle px-5"
+          data-toggle="dropdown"
+        >
+          Sort flashcards by
+        </button>
+        <div class="dropdown-menu">
+          <p class="dropdown-item" @click="orderBy('?ordering=front')">Front</p>
+          <p class="dropdown-item" @click="orderBy('?ordering=back')">Back</p>
+          <p class="dropdown-item" @click="orderBy('?ordering=added')">
+            Oldest first
+          </p>
+          <p class="dropdown-item" @click="orderBy('?ordering=-added')">
+            Newest first
+          </p>
         </div>
       </div>
     </div>
@@ -154,9 +176,9 @@
         >
       </div>
     </div>
-    <div v-if="renaming">
+    <div v-if="renaming" class="text-center">
       <FlashcardListRenameSet :id="id" />
-      <button @click="toggleRename" class="btn btn-back ml-4 btn-sm px-3">
+      <button @click="toggleRename" class="btn btn-back mt-5 btn-sm px-5">
         Cancel
       </button>
     </div>
@@ -194,11 +216,12 @@ export default {
       set_name: "",
       renaming: false,
       search_results: "",
+      ordering: "",
     };
   },
   mounted() {
     console.log("Mounted");
-    this.loadFlashcards(this.url + this.id);
+    this.loadFlashcards(this.url + this.id + this.ordering);
   },
   methods: {
     loadEmpty() {
@@ -238,6 +261,10 @@ export default {
         this.loadEmpty();
       }
     },
+    orderBy(query) {
+      this.ordering = query;
+      this.loadFlashcards(this.url + this.id + this.ordering);
+    },
     searchFlashcard(query) {
       console.log("Searching for flashcard");
       console.log(query);
@@ -255,7 +282,11 @@ export default {
       });
     },
     goToPage(page) {
-      this.loadFlashcards(this.url + this.id + "/" + "?page=" + page);
+      console.log("going to page", page);
+      console.log(this.url + this.id + "/" + this.ordering + "&page=" + page);
+      this.loadFlashcards(
+        this.url + this.id + "/" + this.ordering + "&page=" + page
+      );
     },
     isActive(page) {
       return page === this.current_page;
@@ -292,13 +323,44 @@ export default {
   background: #bbbbbb;
 }
 
+#sort {
+  background: #eeeeee;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  letter-spacing: 1px;
+  word-spacing: 4px;
+  display: inline;
+  width: 60%;
+  margin-top: 5px;
+}
+
 @media (max-width: 1100px) {
   #set_filter {
     width: 100%;
     margin-top: 0px;
   }
+  #sort {
+    width: 100%;
+    margin-top: 0px;
+  }
+  .btn-group {
+    display: block;
+  }
 }
+
 ul {
   padding-inline-start: 0px;
+}
+.dropdown-item {
+  background: #dddddd;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0px;
+}
+.dropdown-item:hover {
+  background: #bbbbbb;
+  font-weight: bold;
 }
 </style>
